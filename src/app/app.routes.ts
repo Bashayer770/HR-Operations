@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
-import { AuthWrapperComponent } from './pages/auth/login/login.component';
+import { LoginComponent } from './pages/auth/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
-  { path: 'login', component: AuthWrapperComponent },
+  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent},
 ];

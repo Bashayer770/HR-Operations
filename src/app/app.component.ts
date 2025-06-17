@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, CommonModule],
@@ -13,5 +14,6 @@ export class AppComponent {
   title = 'HR-Opertations';
   isLoggedIn(): boolean {
     return !!sessionStorage.getItem('token');
+    
   }
 }

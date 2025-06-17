@@ -5,11 +5,11 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-auth-wrapper',
+  selector: 'app-login',
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
 })
-export class AuthWrapperComponent {
+export class LoginComponent {
   activeForm: 'login' | 'register' = 'login';
 
   exitAnimation = false;
