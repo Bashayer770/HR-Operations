@@ -1,1 +1,38 @@
 <p>home works!</p>
+
+
+<div style="width: 800px; height: 50px; background-color: gray;
+ display:flex; justify-content: space-between;     align-items: center; padding:0px 30px;"
+ >
+    <div>
+        دقائق:720
+    </div>
+    <div>
+        المستخدم:200
+    </div>
+    <div>
+        المتبقي:520
+    </div>
+</div>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>transaction</th>
+      <th>fromtime</th>
+      <th>to time</th>
+      <th>minutes</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of data; track $index) {
+        <tr>
+            <td>{{ row.transactionType }}</td>
+            <td>{{ row.fromTime }}</td>
+            <td>{{row.toTime}}</td>
+            <td>{{row.minutes}}</td>
+        </tr>
+    }
+  </tbody>
+</table>
+
