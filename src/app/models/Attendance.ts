@@ -20,7 +20,9 @@ export enum TransactionType{
 
 export interface Transaction{
     transactionType:  TransactionType;
-    fromTime: Time;
-    toTime: Time;
+    fromTime: string;
+    toTime: string;
     minutes: number;
+    date: Date,
 }
+
