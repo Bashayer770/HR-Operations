@@ -125,12 +125,12 @@
 
     <!-- Right side -->
     <div class="flex items-center space-x-4">
-      <button
-        (click)="viewProfile()"
-        class="hover:text-accent-foreground text-xl rounded-lg px-3 py-1 hover:bg-white arabic-text"
+      <a
+        routerLink="/user-info"
+        class="hover:text-accent-foreground text-xl rounded-lg px-3 py-1 hover:bg-white arabic-text cursor-pointer"
       >
         بيانات الموظف
-      </button>
+      </a>
       <button
         (click)="logout()"
         class="hover:text-accent-foreground text-xl rounded-lg px-3 py-1 hover:bg-white arabic-text"
