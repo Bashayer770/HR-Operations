@@ -1,0 +1,14 @@
+/* Navbar styles */
+
+@font-face {
+  font-family: "Taminat Arabic";
+  src: url("../../../assets/fonts/Arabic/Taminat_Arabic.otf.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.arabic-text {
+  font-family: "Taminat Arabic", sans-serif !important;
+  direction: rtl;
+}
