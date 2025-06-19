@@ -10,15 +10,13 @@ export class AttendanceService {
 
   private baseUrl = 'https://localhost:7165/api/'; 
    
-  constructor(private http: HttpClient) {   
-  
-  }
+  constructor(private http: HttpClient) {}
 
   getItems(): Observable<Attendance[]> {
     return this.http.get<Attendance[]>(`${this.baseUrl}Attendances/GetAttendance`);
   }
 
-    getTransactionItems(fingerCode: number, year: number, month: number): Observable<Transaction[]> {
+  getTransactionItems(fingerCode: number, year: number, month: number): Observable<Transaction[]> {
     return this.http.post<Transaction[]>(`${this.baseUrl}Attendances/EmployeeCalculation`,{
       FingerCode: fingerCode,
       Year: year,

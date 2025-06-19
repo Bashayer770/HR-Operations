@@ -1,4 +1,3 @@
-<p>home works!</p>
 
 
 <div style="width: 800px; height: 50px; background-color: gray;
@@ -8,28 +7,30 @@
         دقائق:720
     </div>
     <div>
-        المستخدم:200
+        المستخدم:{{usedMinutes}}
     </div>
     <div>
-        المتبقي:520
+        المتبقي:{{remainingMinutes}}
     </div>
 </div>
 
 <table border="1">
   <thead>
     <tr>
-      <th>transaction</th>
-      <th>fromtime</th>
-      <th>to time</th>
-      <th>minutes</th>
+      <th style="width: 200px;">نوع العملية</th>
+      <th style="width: 200px;">التاريخ</th>
+      <th style="width: 200px;">من</th>
+      <th style="width: 200px;">إلى</th>
+      <th style="width: 200px;">خصم</th>
     </tr>
   </thead>
   <tbody>
     @for (row of data; track $index) {
         <tr>
-            <td>{{ row.transactionType }}</td>
-            <td>{{ row.fromTime }}</td>
-            <td>{{row.toTime}}</td>
+            <td>{{TransactionTypeLabels[row.transactionType] }}</td>
+            <td>{{row.date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{ convertTimeStringToDate(row.fromTime) | date: 'h:mm a'}}</td>
+            <td>{{ convertTimeStringToDate(row.toTime) | date: 'h:mm a'}}</td>
             <td>{{row.minutes}}</td>
         </tr>
     }
