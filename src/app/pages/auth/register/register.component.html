@@ -17,10 +17,6 @@
     <input type="text" [(ngModel)]="registerData.LastName" name="LastName" required style="width: 100%; padding: 8px; margin-top: 4px;">
   </label>
 
-  <label style="display: block; margin-bottom: 10px;">
-    Password:
-    <input type="password" [(ngModel)]="registerData.password" name="Password" required style="width: 100%; padding: 8px; margin-top: 4px;">
-  </label>
 
   <label style="display: block; margin-bottom: 10px;">
     Gender:
@@ -34,8 +30,8 @@
   <label style="display: block; margin-bottom: 10px;">
     Timing Plan:
     <select [(ngModel)]="registerData.TimingCode" name="TimingCode" required style="width: 100%; padding: 8px; margin-top: 4px;">
-      <option *ngFor="let plan of timingplan" [value]="plan.Id">
-        {{ plan.DescE }} ({{ plan.FromTime }} - {{ plan.ToTime }})
+      <option *ngFor="let plan of timingplan" [value]="plan.id">
+        {{ plan.descE }} ({{ plan.fromTime }} - {{ plan.toTime }})
       </option>
     </select>
   </label>
@@ -43,8 +39,8 @@
   <label style="display: block; margin-bottom: 10px;">
     Department:
     <select [(ngModel)]="registerData.DeptCode" name="DeptCode" required style="width: 100%; padding: 8px; margin-top: 4px;">
-      <option *ngFor="let dept of departments" [value]="dept.DeptCode">
-        {{ dept.DescE }}
+      <option *ngFor="let dept of departments" [value]="dept.deptCode">
+        {{ dept.descE }}
       </option>
     </select>
   </label>

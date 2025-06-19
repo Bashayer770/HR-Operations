@@ -68,7 +68,6 @@ export class LoginComponent {
         Email: this.registerData.Email,
         FirstName: this.registerData.FirstName,
         LastName: this.registerData.LastName,
-        Password: this.registerData.password,
         Gender: this.registerData.Gender,
         TimingCode: this.registerData.TimingCode,
         DeptCode: this.registerData.DeptCode,

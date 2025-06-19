@@ -39,8 +39,10 @@ export class RegisterComponent {
   ) {}
 
     ngOnInit(): void {
-    this.getTimingPlans();
-    this.getDepartments();
+      this.dataService.getTimingPlans().subscribe(c => {this.timingplan = c; console.log(c)})
+      console.log(this.timingplan)
+      this.dataService.getDepartments().subscribe(c => this.departments = c)
+      console.log(this.departments)
   }
     onRegisterSubmit() {
     this.loading = true;
@@ -55,7 +57,6 @@ export class RegisterComponent {
         Email: this.registerData.Email,
         FirstName: this.registerData.FirstName,
         LastName: this.registerData.LastName,
-        Password: this.registerData.password,
         Gender: this.registerData.Gender,
         TimingCode: this.registerData.TimingCode,
         DeptCode: this.registerData.DeptCode,
@@ -76,17 +77,6 @@ export class RegisterComponent {
           this.loading = false;
         },
       });
-  }
-
-  getTimingPlans(){
-    this.dataService.getTimingPlans().subscribe(
-      c => this.timingplan = c
-    )
-  }
-    getDepartments(){
-    this.dataService.getDepartments().subscribe(
-      c => this.departments = c
-    )
   }
 
 }

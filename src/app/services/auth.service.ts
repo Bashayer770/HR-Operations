@@ -12,16 +12,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   register(data: RegisterRequest): Observable<AuthResponse> {
-    const formData = new FormData();
-    formData.append('Email', data.Email);
-    formData.append('FirstName', data.FirstName);
-    formData.append('LastName', data.LastName);
-    formData.append('Password', data.Password);
-    formData.append('Sex', data.Gender.toString());
-    formData.append('TimingCode', data.TimingCode.toString());
-    formData.append('DeptCode', data.DeptCode.toString());
-    formData.append('Role', data.Role);
-    return this.http.post<AuthResponse>(API.AUTH.REGISTER, formData);
+    return this.http.post<AuthResponse>(API.AUTH.REGISTER, data);
   }
 
   login(data: LoginRequest): Observable<AuthResponse> {
