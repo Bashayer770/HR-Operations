@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AttendanceService } from '../../services/attendance.service';
 import { Attendance,Transaction,TransactionType } from '../../models/Attendance';
 import { DatePipe } from '@angular/common';
+import { jwtDecode } from 'jwt-decode';
+import { JwtPayload } from '../../models/JwtPayload';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +16,14 @@ export class HomeComponent {
   data: Transaction[] = [];
   usedMinutes: number=0;
   remainingMinutes:number=0;
+  decode = ():JwtPayload => {
+    let token = sessionStorage.getItem('token')
+    if(token){
+    return jwtDecode<JwtPayload>(token)
+  }
+  let jwt: JwtPayload = {empId: "",fingerCode:"",name:""}
+  return jwt;
+  } 
 
   tableData = [
     { name: 'Alice', age: 25, job: 'Engineer' },
@@ -35,7 +45,7 @@ console.log("home")
   [TransactionType.ForgotFingerPrintOut]: 'نسيان بصمة خروج',
 };
   ngOnInit() {
-    this.attendanceService.getTransactionItems(1,  2026,5).subscribe(data => {
+    this.attendanceService.getTransactionItems(Number(this.decode().empId),  2026,5).subscribe(data => {
       console.log(data)
       this.data = data;
       this.usedMinutes = data.reduce((sum, item) => sum + item.minutes, 0);

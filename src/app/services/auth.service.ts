@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { API } from '../services/index';
 import { AuthResponse } from '../models/AuthResponse';
 import { LoginRequest, RegisterRequest } from '../models/AuthRequest';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
