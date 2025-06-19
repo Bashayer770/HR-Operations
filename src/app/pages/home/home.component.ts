@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AttendanceService } from '../../services/attendance.service';
 import { Attendance,Transaction,TransactionType } from '../../models/Attendance';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../models/JwtPayload';
 
