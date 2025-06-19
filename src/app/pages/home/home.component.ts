@@ -35,10 +35,10 @@ console.log("home")
   [TransactionType.ForgotFingerPrintOut]: 'نسيان بصمة خروج',
 };
   ngOnInit() {
-    this.attendanceService.getTransactionItems(1,  2026,5).subscribe(data => {
-      console.log(data)
-      this.data = data;
-      this.usedMinutes = data.reduce((sum, item) => sum + item.minutes, 0);
+    this.attendanceService.getTransactionItems(1,  2026,5).subscribe(result => {
+      console.log(result)
+      this.data = result;
+      this.usedMinutes = result.reduce((sum, item) => sum + item.minutes, 0);
       this.remainingMinutes = 720 - this.usedMinutes
     });
   }

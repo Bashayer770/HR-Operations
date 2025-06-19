@@ -1,0 +1,32 @@
+<table border="1">
+  <thead>
+    <tr>
+      <th style="width: 200px;">الاسم الانجليزي</th>
+      <th style="width: 200px;">الاسم العربي</th>
+      <th style="width: 200px;">التعديلات</th>
+      <th style="width: 200px;">الغاء</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of data; track $index) {
+        <tr>
+            <td>{{row.descE}}</td>
+            <td>{{row.descA }}</td>
+            <td><button>Edit</button></td>
+            <td><button (click)="Delete(row.id)">Delete</button></td>
+        </tr>
+    }
+  </tbody>
+</table>
+
+<button
+  class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+  (click)="openModal()"
+>
+  Open Modal
+</button>
+
+<app-modal
+  [isVisible]="showModal"
+  (closeModal)="closeModal()"
+></app-modal>
