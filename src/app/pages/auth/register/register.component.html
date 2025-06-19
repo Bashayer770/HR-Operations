@@ -1,1 +1,61 @@
-<p>register works!</p>
+<form (ngSubmit)="onRegisterSubmit()" style="max-width: 500px; margin: auto; background-color: #fff; padding: 20px; border: 1px solid #ccc; border-radius: 8px;" #registerForm="ngForm">
+
+  <h2 style="text-align: center; color: #333;">User Registration Form</h2>
+
+  <label style="display: block; margin-bottom: 10px;">
+    Email:
+    <input type="email" [(ngModel)]="registerData.Email" name="Email" required style="width: 100%; padding: 8px; margin-top: 4px;">
+  </label>
+
+  <label style="display: block; margin-bottom: 10px;">
+    First Name:
+    <input type="text" [(ngModel)]="registerData.FirstName" name="FirstName" required style="width: 100%; padding: 8px; margin-top: 4px;">
+  </label>
+
+  <label style="display: block; margin-bottom: 10px;">
+    Last Name:
+    <input type="text" [(ngModel)]="registerData.LastName" name="LastName" required style="width: 100%; padding: 8px; margin-top: 4px;">
+  </label>
+
+
+  <label style="display: block; margin-bottom: 10px;">
+    Gender:
+    <select [(ngModel)]="registerData.Gender" name="Gender" required style="width: 100%; padding: 8px; margin-top: 4px;">
+      <option value="0">Select Gender</option>
+      <option value="1">Male</option>
+      <option value="2">Female</option>
+    </select>
+  </label>
+
+  <label style="display: block; margin-bottom: 10px;">
+    Timing Plan:
+    <select [(ngModel)]="registerData.TimingCode" name="TimingCode" required style="width: 100%; padding: 8px; margin-top: 4px;">
+      <option *ngFor="let plan of timingplan" [value]="plan.id">
+        {{ plan.descE }} ({{ plan.fromTime }} - {{ plan.toTime }})
+      </option>
+    </select>
+  </label>
+
+  <label style="display: block; margin-bottom: 10px;">
+    Department:
+    <select [(ngModel)]="registerData.DeptCode" name="DeptCode" required style="width: 100%; padding: 8px; margin-top: 4px;">
+      <option *ngFor="let dept of departments" [value]="dept.deptCode">
+        {{ dept.descE }}
+      </option>
+    </select>
+  </label>
+
+  <label style="display: block; margin-bottom: 20px;">
+    Role:
+    <input type="text" [(ngModel)]="registerData.Role" name="Role" required style="width: 100%; padding: 8px; margin-top: 4px;">
+  </label>
+
+  <button type="submit" [disabled]="loading" style="width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; font-size: 16px; border-radius: 4px;">
+    {{ loading ? 'Registering...' : 'Submit' }}
+  </button>
+
+  <div *ngIf="errorMessage" style="color: red; margin-top: 10px;">
+    {{ errorMessage }}
+  </div>
+
+</form>

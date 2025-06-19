@@ -23,9 +23,14 @@ export class LoginComponent {
   };
 
   registerData = {
-    username: '',
+    Email: '',
+    FirstName: '',
+    LastName: '',
     password: '',
-    image: null as File | null,
+    Gender: 0,
+    TimingCode: 0,
+    DeptCode: 0,
+    Role: ''
   };
 
   constructor(
@@ -49,26 +54,24 @@ export class LoginComponent {
     this.errorMessage = '';
   }
 
-  onFileChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.registerData.image = file;
-    }
-  }
 
   onRegisterSubmit() {
     this.loading = true;
-    if (!this.registerData.image) {
-      this.errorMessage = 'Please upload a profile image.';
-      this.loading = false;
-      return;
-    }
+//    if (!this.registerData.image) {
+//      this.errorMessage = 'Please upload a profile image.';
+//      this.loading = false;
+//      return;
+//    }
 
     this.authService
       .register({
-        username: this.registerData.username,
-        password: this.registerData.password,
-        image: this.registerData.image as File,
+        Email: this.registerData.Email,
+        FirstName: this.registerData.FirstName,
+        LastName: this.registerData.LastName,
+        Gender: this.registerData.Gender,
+        TimingCode: this.registerData.TimingCode,
+        DeptCode: this.registerData.DeptCode,
+        Role: this.registerData.Role
       })
       .subscribe({
         next: (res) => {
