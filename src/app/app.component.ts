@@ -1,20 +1,29 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { HomeComponent } from "./pages/home/home.component";
-
+import { CommonModule } from '@angular/common';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { NavbarComponent } from './Components/navbar/navbar.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, HomeComponent],
-
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, NavbarComponent],
+  template: `
+    <app-navbar *ngIf="!isLoginPage"></app-navbar>
+    <router-outlet></router-outlet>
+  `,
 })
 export class AppComponent {
-  title = 'HR-Opertations';
-  isLoggedIn(): boolean {
-    return !!sessionStorage.getItem('token');
-    
+  isLoginPage = false;
+
+  constructor(private router: Router) {
+    // Subscribe to router events to update isLoginPage
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.isLoginPage = event.url === '/login';
+        }
+      });
   }
 }
