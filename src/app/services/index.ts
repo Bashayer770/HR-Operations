@@ -7,4 +7,5 @@ export const API = {
   },
       TIMINGPLAN: `${BASE_URL}/TimingPlans`,
       DEPARTMENTS: `${BASE_URL}/Departments`,
+      LOCATIONS: `${BASE_URL}/Locations`,
 };
