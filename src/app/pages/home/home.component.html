@@ -1,39 +1,59 @@
+<!-- Minutes Summary Card -->
+<div class="container mx-auto px-4 py-6">
+  <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
+    <div class="flex justify-between items-center arabic-text text-lg">
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600">الدقائق الكلية:</span>
+        <span class="font-semibold">720</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600">المستخدم:</span>
+        <span class="font-semibold text-primary">{{ usedMinutes }}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600">المتبقي:</span>
+        <span
+          class="font-semibold"
+          [ngClass]="{ 'text-red-600': remainingMinutes < 720 }"
+          >{{ remainingMinutes }}</span
+        >
+      </div>
+    </div>
+  </div>
 
-
-<div style="width: 800px; height: 50px; background-color: gray;
- display:flex; justify-content: space-between;     align-items: center; padding:0px 30px;"
- >
-    <div>
-        دقائق:720
+  <!-- Table Card -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="overflow-x-auto max-h-96">
+      <table class="w-full arabic-text">
+        <thead class="bg-primary text-white">
+          <tr>
+            <th class="px-6 py-4 text-right">نوع العملية</th>
+            <th class="px-6 py-4 text-right">التاريخ</th>
+            <th class="px-6 py-4 text-right">من</th>
+            <th class="px-6 py-4 text-right">إلى</th>
+            <th class="px-6 py-4 text-right">خصم</th>
+          </tr>
+        </thead>
+        <tbody class="overflow-y-auto block max-h-72 w-full">
+          @for (row of data; track $index) {
+          <tr
+            class="border-b border-gray-200 hover:bg-gray-50 table w-full table-fixed"
+          >
+            <td class="px-6 py-4">
+              {{ TransactionTypeLabels[row.transactionType] }}
+            </td>
+            <td class="px-6 py-4">{{ row.date | date : "dd/MM/yyyy" }}</td>
+            <td class="px-6 py-4">
+              {{ convertTimeStringToDate(row.fromTime) | date : "h:mm a" }}
+            </td>
+            <td class="px-6 py-4">
+              {{ convertTimeStringToDate(row.toTime) | date : "h:mm a" }}
+            </td>
+            <td class="px-6 py-4">{{ row.minutes }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
     </div>
-    <div>
-        المستخدم:{{usedMinutes}}
-    </div>
-    <div>
-        المتبقي:{{remainingMinutes}}
-    </div>
+  </div>
 </div>
-
-<table border="1">
-  <thead>
-    <tr>
-      <th style="width: 200px;">نوع العملية</th>
-      <th style="width: 200px;">التاريخ</th>
-      <th style="width: 200px;">من</th>
-      <th style="width: 200px;">إلى</th>
-      <th style="width: 200px;">خصم</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (row of data; track $index) {
-        <tr>
-            <td>{{TransactionTypeLabels[row.transactionType] }}</td>
-            <td>{{row.date | date: 'dd/MM/yyyy'}}</td>
-            <td>{{ convertTimeStringToDate(row.fromTime) | date: 'h:mm a'}}</td>
-            <td>{{ convertTimeStringToDate(row.toTime) | date: 'h:mm a'}}</td>
-            <td>{{row.minutes}}</td>
-        </tr>
-    }
-  </tbody>
-</table>
-
