@@ -8,18 +8,22 @@
       </div>
       <div class="flex items-center gap-2">
         <span class="text-gray-600">المستخدم:</span>
-        <span class="font-semibold">{{ usedMinutes }}</span>
+        <span class="font-semibold text-primary">{{ usedMinutes }}</span>
       </div>
       <div class="flex items-center gap-2">
         <span class="text-gray-600">المتبقي:</span>
-        <span class="font-semibold">{{ remainingMinutes }}</span>
+        <span
+          class="font-semibold"
+          [ngClass]="{ 'text-red-600': remainingMinutes < 720 }"
+          >{{ remainingMinutes }}</span
+        >
       </div>
     </div>
   </div>
 
   <!-- Table Card -->
   <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto max-h-96">
       <table class="w-full arabic-text">
         <thead class="bg-primary text-white">
           <tr>
@@ -30,9 +34,11 @@
             <th class="px-6 py-4 text-right">خصم</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="overflow-y-auto block max-h-72 w-full">
           @for (row of data; track $index) {
-          <tr class="border-b border-gray-200 hover:bg-gray-50">
+          <tr
+            class="border-b border-gray-200 hover:bg-gray-50 table w-full table-fixed"
+          >
             <td class="px-6 py-4">
               {{ TransactionTypeLabels[row.transactionType] }}
             </td>
