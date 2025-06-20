@@ -4,10 +4,11 @@ import { Attendance,Transaction,TransactionType } from '../../models/Attendance'
 import { CommonModule, DatePipe } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../models/JwtPayload';
+import { ChatbotComponent } from '../../Components/chatbot/chatbot.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, DatePipe],
+  imports: [CommonModule, DatePipe, ChatbotComponent],
   templateUrl: './home.component.html',
   styles: ``,
 })

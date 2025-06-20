@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "Taminat Arabic";
+  src: url("../../../assets/fonts/Arabic/Taminat_Arabic.otf.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.chat-text {
+  font-family: "Taminat Arabic", sans-serif !important;
+  direction: rtl;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+:host ::ng-deep .chat-enter {
+  animation: slideUp 0.3s ease-out forwards;
+}
