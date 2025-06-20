@@ -14,6 +14,10 @@ export class NavbarComponent {
 
   constructor(private router: Router) {}
 
+  get isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }

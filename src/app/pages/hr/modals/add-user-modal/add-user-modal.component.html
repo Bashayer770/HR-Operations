@@ -1,0 +1,44 @@
+<div
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  (click)="onOverlayClick($event)"
+>
+  <div
+    class="bg-white rounded-lg p-8 min-w-[350px] max-w-[90vw]"
+    (click)="$event.stopPropagation()"
+  >
+    <h2 class="text-xl font-bold mb-4 arabic-text">إضافة مستخدم</h2>
+    <form (ngSubmit)="onSave()">
+      <div class="mb-4">
+        <label class="block mb-1 arabic-text">الاسم</label>
+        <input
+          [(ngModel)]="newUser.nameE"
+          name="nameE"
+          class="border rounded px-4 py-2 w-full arabic-text"
+        />
+      </div>
+      <div class="mb-4">
+        <label class="block mb-1 arabic-text">البريد الإلكتروني</label>
+        <input
+          [(ngModel)]="newUser.email"
+          name="email"
+          class="border rounded px-4 py-2 w-full arabic-text"
+        />
+      </div>
+      <div class="flex justify-end gap-2">
+        <button
+          type="button"
+          (click)="close.emit()"
+          class="bg-gray-300 px-4 py-2 rounded arabic-text"
+        >
+          إلغاء
+        </button>
+        <button
+          type="submit"
+          class="bg-cyan-800 text-white px-4 py-2 rounded arabic-text"
+        >
+          حفظ
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
