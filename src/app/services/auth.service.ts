@@ -20,5 +20,10 @@ export class AuthService {
     return this.http.post<AuthResponse>(API.AUTH.LOGIN, data);
   }
 
-  
+  changePassword(data: {
+    currentPassword: string;
+    newPassword: string;
+  }): Observable<any> {
+    return this.http.post<any>(API.AUTH.CHANGE_PASSWORD, data);
+  }
 }

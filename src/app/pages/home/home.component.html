@@ -14,7 +14,9 @@
         <span class="text-gray-600">المتبقي:</span>
         <span
           class="font-semibold"
-          [ngClass]="{ 'text-red-600': remainingMinutes < 720 }"
+          [ngClass]="{
+            'text-red-600': remainingMinutes <= 0 || remainingMinutes < 720
+          }"
           >{{ remainingMinutes }}</span
         >
       </div>

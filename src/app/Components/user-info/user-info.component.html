@@ -6,7 +6,14 @@
   >
     <h3 class="text-3xl font-sans text-white arabic-text">معلومات المستخدم</h3>
   </div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+
+  <div *ngIf="loading" class="text-center text-lg">جاري التحميل...</div>
+  <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
+
+  <div
+    *ngIf="userProfile && !loading && !error"
+    class="grid grid-cols-1 sm:grid-cols-2 gap-10"
+  >
     <div class="flex flex-row-reverse items-center gap-6">
       <label
         class="text-2xl font-sans text-primary whitespace-nowrap arabic-text"
@@ -15,18 +22,9 @@
       <div
         class="flex-1 p-4 border-b-2 bg-slate-50 border-gray-300 rounded-lg shadow-sm text-left"
       >
-        <span class="arabic-text text-xl">شؤون الموظفين</span>
-      </div>
-    </div>
-    <div class="flex flex-row-reverse items-center gap-6">
-      <label
-        class="text-2xl font-sans text-primary whitespace-nowrap arabic-text"
-        >رقم القسم:</label
-      >
-      <div
-        class="flex-1 p-4 border-b-2 bg-slate-50 border-gray-300 rounded-lg shadow-sm text-left"
-      >
-        <span class="arabic-text text-xl">101</span>
+        <span class="arabic-text text-xl">{{
+          userProfile.Employee?.DeptCode || "-"
+        }}</span>
       </div>
     </div>
     <div class="flex flex-row-reverse items-center gap-6">
@@ -37,7 +35,9 @@
       <div
         class="flex-1 p-4 border-b-2 bg-slate-50 border-gray-300 rounded-lg shadow-sm text-left"
       >
-        <span class="arabic-text text-xl">123456</span>
+        <span class="arabic-text text-xl">{{
+          userProfile.Employee?.Id || "-"
+        }}</span>
       </div>
     </div>
     <div class="flex flex-row-reverse items-center gap-6">
@@ -48,7 +48,9 @@
       <div
         class="flex-1 p-4 border-b-2 font-bold bg-slate-50 border-gray-300 rounded-lg shadow-sm text-left"
       >
-        <span class="arabic-text text-xl">ahmedm</span>
+        <span class="arabic-text text-xl">{{
+          userProfile.UserName || "-"
+        }}</span>
       </div>
     </div>
     <div class="flex flex-row-reverse items-center gap-6">
@@ -59,19 +61,62 @@
       <div
         class="flex-1 p-4 border-b-2 bg-slate-50 border-gray-300 rounded-lg shadow-sm text-left"
       >
-        <span class="arabic-text text-xl">أحمد محمد</span>
+        <span class="arabic-text text-xl">{{
+          userProfile.Employee?.NameE ||
+            userProfile.FirstName + " " + userProfile.LastName ||
+            "-"
+        }}</span>
       </div>
     </div>
     <div class="flex flex-row-reverse items-center gap-6">
       <label
         class="text-2xl font-sans text-primary whitespace-nowrap arabic-text"
-        >الرقم المدني:</label
+        >البريد الإلكتروني:</label
       >
       <div
         class="flex-1 p-4 border-b-2 bg-slate-50 border-gray-300 rounded-lg shadow-sm text-left"
       >
-        <span class="arabic-text text-xl">123456789012</span>
+        <span class="arabic-text text-xl">{{ userProfile.Email || "-" }}</span>
       </div>
     </div>
+    <div class="flex flex-row-reverse items-center gap-6">
+      <label
+        class="text-2xl font-sans text-primary whitespace-nowrap arabic-text"
+        >كود البصمة:</label
+      >
+      <div
+        class="flex-1 p-4 border-b-2 bg-slate-50 border-gray-300 rounded-lg shadow-sm text-left"
+      >
+        <span class="arabic-text text-xl">{{
+          userProfile.Employee?.FingerCode || "-"
+        }}</span>
+      </div>
+    </div>
+    <div class="flex flex-row-reverse items-center gap-6">
+      <label
+        class="text-2xl font-sans text-primary whitespace-nowrap arabic-text"
+        >كود التوقيت:</label
+      >
+      <div
+        class="flex-1 p-4 border-b-2 bg-slate-50 border-gray-300 rounded-lg shadow-sm text-left"
+      >
+        <span class="arabic-text text-xl">{{
+          userProfile.Employee?.TimingCode || "-"
+        }}</span>
+      </div>
+    </div>
+    <!-- <div class="flex flex-row-reverse items-center gap-6">
+      <label
+        class="text-2xl font-sans text-primary whitespace-nowrap arabic-text"
+        >الحالة:</label
+      >
+      <div
+        class="flex-1 p-4 border-b-2 bg-slate-50 border-gray-300 rounded-lg shadow-sm text-left"
+      >
+        <span class="arabic-text text-xl">{{
+          userProfile.Employee?.IsActive ? "نشط" : "غير نشط"
+        }}</span>
+      </div>
+    </div> -->
   </div>
 </div>
