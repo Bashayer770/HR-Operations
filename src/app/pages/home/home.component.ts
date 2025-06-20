@@ -18,6 +18,7 @@ export class HomeComponent {
   decode = ():JwtPayload => {
     let token = sessionStorage.getItem('token')
     if(token){
+      console.log(token);
     return jwtDecode<JwtPayload>(token)
   }
   let jwt: JwtPayload = {empId: "",fingerCode:"",name:""}

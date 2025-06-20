@@ -22,38 +22,35 @@
   </div>
 
   <!-- Table Card -->
-  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-    <div class="overflow-x-auto max-h-96">
-      <table class="w-full arabic-text">
-        <thead class="bg-primary text-white">
-          <tr>
-            <th class="px-6 py-4 text-right">نوع العملية</th>
-            <th class="px-6 py-4 text-right">التاريخ</th>
-            <th class="px-6 py-4 text-right">من</th>
-            <th class="px-6 py-4 text-right">إلى</th>
-            <th class="px-6 py-4 text-right">خصم</th>
-          </tr>
-        </thead>
-        <tbody class="overflow-y-auto block max-h-72 w-full">
-          @for (row of data; track $index) {
-          <tr
-            class="border-b border-gray-200 hover:bg-gray-50 table w-full table-fixed"
-          >
-            <td class="px-6 py-4">
-              {{ TransactionTypeLabels[row.transactionType] }}
-            </td>
-            <td class="px-6 py-4">{{ row.date | date : "dd/MM/yyyy" }}</td>
-            <td class="px-6 py-4">
-              {{ convertTimeStringToDate(row.fromTime) | date : "h:mm a" }}
-            </td>
-            <td class="px-6 py-4">
-              {{ convertTimeStringToDate(row.toTime) | date : "h:mm a" }}
-            </td>
-            <td class="px-6 py-4">{{ row.minutes }}</td>
-          </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+  <div class="overflow-x-auto max-h-96">
+    <table class="w-full arabic-text table-fixed">
+      <thead class="bg-primary text-white sticky top-0 z-10">
+        <tr>
+          <th class="px-6 py-4 text-right">نوع العملية</th>
+          <th class="px-6 py-4 text-right">التاريخ</th>
+          <th class="px-6 py-4 text-right">من</th>
+          <th class="px-6 py-4 text-right">إلى</th>
+          <th class="px-6 py-4 text-right">خصم</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        @for (row of data; track $index) {
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4">
+            {{ TransactionTypeLabels[row.transactionType] }}
+          </td>
+          <td class="px-6 py-4">{{ row.date | date : "dd/MM/yyyy" }}</td>
+          <td class="px-6 py-4">
+            {{ convertTimeStringToDate(row.fromTime) | date : "h:mm a" }}
+          </td>
+          <td class="px-6 py-4">
+            {{ convertTimeStringToDate(row.toTime) | date : "h:mm a" }}
+          </td>
+          <td class="px-6 py-4">{{ row.minutes }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
   </div>
 </div>
