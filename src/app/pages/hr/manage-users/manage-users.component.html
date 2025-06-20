@@ -1,0 +1,108 @@
+<div class="w-4/5 mx-auto flex justify-end mb-3">
+  <div class="w-[39%] flex justify-start">
+    <button
+      (click)="addUser()"
+      class="bg-primary hover:bg-[#143e52] text-white px-4 py-2 rounded-lg arabic-text w-[40%]"
+    >
+      إضافة مستخدم
+    </button>
+  </div>
+</div>
+<div class="w-4/5 mx-auto flex flex-row gap-4 mb-2">
+  <input
+    type="text"
+    [(ngModel)]="filters.department"
+    placeholder="تصفية حسب القسم"
+    class="border rounded px-6 py-3 arabic-text w-1/4"
+  />
+  <input
+    type="text"
+    [(ngModel)]="filters.username"
+    placeholder="تصفية حسب اسم الدخول"
+    class="border rounded px-6 py-3 arabic-text w-1/4"
+  />
+  <input
+    type="text"
+    [(ngModel)]="filters.name"
+    placeholder="تصفية حسب الاسم"
+    class="border rounded px-6 py-3 arabic-text w-1/4"
+  />
+</div>
+<!-- Registration Modal -->
+<div
+  *ngIf="showRegisterModal"
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  (click)="closeRegisterModal()"
+>
+  <div (click)="$event.stopPropagation()">
+    <app-register (closeModal)="closeRegisterModal()"></app-register>
+  </div>
+</div>
+<div class="h-2"></div>
+<div class="flex w-4/5 h-[65vh] gap-4 mx-auto">
+  <!-- Table Section (80%) -->
+  <div class="w-[80%] bg-white rounded-lg shadow-lg flex flex-col">
+    <div
+      class="bg-primary text-white p-4 rounded-t-lg text-lg font-bold arabic-text text-center"
+    >
+      إدارة المستخدمين
+    </div>
+    <div *ngIf="loading" class="text-center text-lg arabic-text">
+      جاري التحميل...
+    </div>
+    <div *ngIf="error" class="text-center text-red-500 arabic-text">
+      {{ error }}
+    </div>
+    <div class="flex-1 overflow-y-auto" style="max-height: 48vh">
+      <table class="w-full text-right" *ngIf="!loading && !error">
+        <thead class="sticky top-0 bg-primary text-white">
+          <tr>
+            <th class="arabic-text">الاسم</th>
+            <th class="arabic-text">البريد الإلكتروني</th>
+            <th class="arabic-text">الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let user of filteredUsers()"
+            (click)="selectUser(user)"
+            [class.bg-gray-100]="selectedUser?.id === user.id"
+          >
+            <td class="arabic-text">{{ user.nameE || user.NameE }}</td>
+            <td class="arabic-text">{{ user.email || user.Email }}</td>
+            <td>
+              <button
+                (click)="editUser(user); $event.stopPropagation()"
+                class="bg-cyan-700 text-white px-2 py-1 rounded mr-2 arabic-text"
+              >
+                تعديل
+              </button>
+              <button
+                (click)="softDeleteUser(user); $event.stopPropagation()"
+                class="bg-red-600 text-white px-2 py-1 rounded arabic-text"
+              >
+                حذف
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Details Section (20%) -->
+  <div
+    *ngIf="selectedUser"
+    class="w-[20%] bg-slate-50 rounded-lg shadow-lg p-6 flex flex-col justify-center items-center"
+  >
+    <h3 class="text-xl font-bold mb-4 arabic-text">
+      {{ selectedUser.nameE || selectedUser.NameE }}
+    </h3>
+    <p class="arabic-text">
+      البريد الإلكتروني: {{ selectedUser.email || selectedUser.Email }}
+    </p>
+    <p class="arabic-text">
+      رقم الموظف: {{ selectedUser.id || selectedUser.Id }}
+    </p>
+    <!-- Add more fields as needed -->
+  </div>
+</div>
