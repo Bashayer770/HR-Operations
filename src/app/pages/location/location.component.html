@@ -1,32 +1,51 @@
-<table border="1">
-  <thead>
-    <tr>
-      <th style="width: 200px;">الاسم الانجليزي</th>
-      <th style="width: 200px;">الاسم العربي</th>
-      <th style="width: 200px;">التعديلات</th>
-      <th style="width: 200px;">الغاء</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (row of data; track $index) {
-        <tr>
-            <td>{{row.descE}}</td>
-            <td>{{row.descA }}</td>
-            <td><button>Edit</button></td>
-            <td><button (click)="Delete(row.id)">Delete</button></td>
+<div class="p-4">
+  <button (click)="openAddModal()" class="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Location</button>
+
+  <table class="min-w-full bg-white shadow-md rounded">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="py-2 px-4 text-left">الاسم الانجليزي</th>
+        <th class="py-2 px-4 text-left">الاسم العربي</th>
+        <th class="py-2 px-4">تعديل/حذف</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (location of locations; track $index) {
+        <tr class="border-b">
+          <td class="py-2 px-4">{{ location.descE }}</td>
+          <td class="py-2 px-4">{{ location.descA }}</td>
+          <td class="py-2 px-4 flex gap-2 justify-center">
+            <button (click)="openEditModal(location)" class="bg-blue-500 text-white px-2 py-1 rounded">تعديل</button>
+            <button (click)="deleteLocation(location.id)" class="bg-red-500 text-white px-2 py-1 rounded">حذف</button>
+          </td>
         </tr>
-    }
-  </tbody>
-</table>
+      }
+    </tbody>
+  </table>
+</div>
 
-<button
-  class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-  (click)="openModal()"
->
-  Open Modal
-</button>
-
-<app-modal
-  [isVisible]="showModal"
-  (closeModal)="closeModal()"
-></app-modal>
+@if(isVisible){
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-2xl shadow-xl p-6 w-96 relative">
+        <h2 class="text-xl font-bold mb-4">Locations</h2>
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="descE">الاسم الانجليزي</label>
+              <input formControlName="descE" id="descE" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
+              @if(myForm.get('descE')?.touched && myForm.get('descE')?.invalid){
+                <small class="text-red-500">Description is required</small>
+              }            
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="descA">الاسم العربي</label>
+              <input formControlName="descA" id="descA" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
+              @if(myForm.get('descA')?.touched && myForm.get('descA')?.invalid){
+                <small class="text-red-500">Description is required</small>
+              }
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">{{ isEditMode ? 'Update' : 'Add' }}</button>
+            <button (click)="close()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Close</button>
+          </form>
+      </div>
+  </div>
+}

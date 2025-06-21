@@ -1,0 +1,86 @@
+<div class="p-4">
+  <button (click)="openAddModal()" class="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Node</button>
+
+  <table class="min-w-full bg-white shadow-md rounded">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="py-2 px-4 text-left">رقم الجهاز</th>
+        <th class="py-2 px-4 text-left">الفرع</th>
+        <th class="py-2 px-4 text-left">الاسم الانجليزي</th>
+        <th class="py-2 px-4 text-left">الاسم العربي</th>
+        <th class="py-2 px-4">تعديل/حذف</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (node of nodes; track $index) {
+        <tr class="border-b">
+          <td class="py-2 px-4">{{ node.serialNo }}</td>
+          <td class="py-2 px-4">{{ node.location?.descA }}</td>
+          <td class="py-2 px-4">{{ node.descE }}</td>
+          <td class="py-2 px-4">{{ node.descA }}</td>
+          <td class="py-2 px-4 flex gap-2 justify-center">
+            <button (click)="openEditModal(node)" class="bg-blue-500 text-white px-2 py-1 rounded">تعديل</button>
+            <button (click)="deleteNode(node.serialNo)" class="bg-red-500 text-white px-2 py-1 rounded">حذف</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+@if(isVisible){
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-2xl shadow-xl p-6 w-96 relative">
+        <h2 class="text-xl font-bold mb-4">Nodes</h2>
+          <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="serialNo">رقم الجهاز</label>
+              <input formControlName="serialNo" id="serialNo" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
+              @if(myForm.get('serialNo')?.touched && myForm.get('serialNo')?.invalid){
+                <small class="text-red-500">Description is required</small>
+              }
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="descA">الاسم العربي</label>
+              <input formControlName="descA" id="descA" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
+              @if(myForm.get('descA')?.touched && myForm.get('descA')?.invalid){
+                <small class="text-red-500">Description is required</small>
+              }
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="descE">الاسم الانجليزي</label>
+              <input formControlName="descE" id="descE" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
+              @if(myForm.get('descE')?.touched && myForm.get('descE')?.invalid){
+                <small class="text-red-500">Description is required</small>
+              }            
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="locCode">مكان الجهاز</label>
+                <select class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" formControlName="locCode" id="locCode">
+                    @for (location of locations; track $index) {
+                        <option [value]="location.id">{{ location.descA }}</option>
+                    }
+                </select>
+              @if(myForm.get('locCode')?.touched && myForm.get('locCode')?.invalid){
+                <small class="text-red-500">Description is required</small>
+              }
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="floor">الدور</label>
+              <input formControlName="floor" id="floor" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
+              @if(myForm.get('floor')?.touched && myForm.get('floor')?.invalid){
+                <small class="text-red-500">Description is required</small>
+              }
+            </div>
+
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">{{ isEditMode ? 'Update' : 'Add' }}</button>
+            <button (click)="close()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Close</button>
+          </form>
+      </div>
+  </div>
+}

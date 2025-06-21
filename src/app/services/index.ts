@@ -15,6 +15,7 @@ export const API = {
   TIMINGPLAN: `${BASE_URL}/TimingPlans`,
   DEPARTMENTS: `${BASE_URL}/Departments`,
   LOCATIONS: `${BASE_URL}/Locations`,
+  NODES: `${BASE_URL}/Nodes`,
   EMPLOYEES: `${BASE_URL}/Employees/all`,
   CHAT:`${CHAT_URL}/Chat`
 };

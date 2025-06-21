@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { API } from '.';
 import { Department } from '../models/Department';
-import { MyLocation } from '../models/Location';
+import { MyLocation } from '../models/MyLocation';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,11 +13,15 @@ export class LocationService {
     getLocations(): Observable<MyLocation[]>{
       return this._http.get<MyLocation[]>(`${API.LOCATIONS}/GetLocations`)
     }
-    AddLocations(location:MyLocation): Observable<any>{
-      return this._http.post<any>(`${API.LOCATIONS}/AddLocations`, location)
+    addLocations(location:MyLocation): Observable<any>{
+      return this._http.post<string>(`${API.LOCATIONS}/AddLocation`, location)
     }
-    DeleteLocations(id : number): Observable<any>{
-      return this._http.delete<any>(`${API.LOCATIONS}/DeleteLocations/${id}`)
+    deleteLocations(id : number): Observable<any>{
+      return this._http.delete<string>(`${API.LOCATIONS}/DeleteLocation/${id}`)
     }
+    updateLocations(location:MyLocation): Observable<any>{
+      return this._http.put<any>(`${API.LOCATIONS}/UpdateLocation`, location)
+    }
+
 }
 
