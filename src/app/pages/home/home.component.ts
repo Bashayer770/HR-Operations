@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AttendanceService } from '../../services/attendance.service';
-import { Attendance,Transaction,TransactionType } from '../../models/Attendance';
+import {
+  Attendance,
+  Transaction,
+  TransactionType,
+} from '../../models/Attendance';
 import { CommonModule, DatePipe } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../models/JwtPayload';
 import { ChatbotComponent } from '../../Components/chatbot/chatbot.component';
+import { AuthService } from '../../services/auth.service';
+import { TimingPlan } from '../../models/Employee';
 
 @Component({
   selector: 'app-home',
@@ -12,19 +18,20 @@ import { ChatbotComponent } from '../../Components/chatbot/chatbot.component';
   templateUrl: './home.component.html',
   styles: ``,
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   data: Transaction[] = [];
-  usedMinutes: number=0;
-  remainingMinutes:number=0;
-  decode = ():JwtPayload => {
-    let token = sessionStorage.getItem('token')
-    if(token){
+  usedMinutes: number = 0;
+  totalMinutes: number = 720;
+  remainingMinutes: number = 720;
+  decode = (): JwtPayload => {
+    let token = sessionStorage.getItem('token');
+    if (token) {
       console.log(token);
-    return jwtDecode<JwtPayload>(token)
-  }
-  let jwt: JwtPayload = {empId: "",fingerCode:"",name:""}
-  return jwt;
-  } 
+      return jwtDecode<JwtPayload>(token);
+    }
+    let jwt: JwtPayload = { empId: '', fingerCode: '', name: '' };
+    return jwt;
+  };
 
   tableData = [
     { name: 'Alice', age: 25, job: 'Engineer' },
@@ -32,7 +39,31 @@ export class HomeComponent {
     { name: 'Charlie', age: 28, job: 'Developer' },
   ];
 
-  constructor(private attendanceService: AttendanceService) {
+  userName: string | null = null;
+  timingPlan: TimingPlan | null = null;
+
+  summary = [
+    {
+      title: 'إجمالي الدقائق',
+      value: this.totalMinutes,
+      icon: 'time',
+    },
+    {
+      title: 'الدقائق المستخدمة',
+      value: this.usedMinutes,
+      icon: 'time-check',
+    },
+    {
+      title: 'الدقائق المتبقية',
+      value: this.remainingMinutes,
+      icon: 'time-left',
+    },
+  ];
+
+  constructor(
+    private attendanceService: AttendanceService,
+    private authService: AuthService
+  ) {
     console.log('home');
   }
 
@@ -43,13 +74,26 @@ export class HomeComponent {
     [TransactionType.ForgotFingerPrintIn]: 'نسيان بصمة دخول',
     [TransactionType.ForgotFingerPrintOut]: 'نسيان بصمة خروج',
   };
-  ngOnInit() {
-    this.attendanceService.getTransactionItems(Number(this.decode().empId), 2026, 5).subscribe((result) => {
-      console.log(result);
-      this.data = result;
-      this.usedMinutes = result.reduce((sum, item) => sum + item.minutes, 0);
-      this.remainingMinutes = 720 - this.usedMinutes;
-    });
+  ngOnInit(): void {
+    const token = sessionStorage.getItem('token') ?? '';
+    const decodedToken: JwtPayload = jwtDecode(token);
+    this.attendanceService
+      .getTransactionItems(
+        Number(decodedToken.empId),
+        new Date().getFullYear(),
+        new Date().getMonth() + 1
+      )
+      .subscribe((res: Transaction[]) => {
+        this.data = res;
+        this.usedMinutes = res.reduce((acc, curr) => acc + curr.minutes, 0);
+        this.remainingMinutes = 720 - this.usedMinutes;
+      });
+
+    const user = this.authService.getUser();
+    if (user) {
+      this.userName = user.nameA;
+      this.timingPlan = user.timingPlan;
+    }
   }
 
   convertTimeStringToDate(time: string): Date {
