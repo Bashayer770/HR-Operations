@@ -1,21 +1,28 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
   isDropdownOpen = false;
+  isLoggedIn = false;
 
   constructor(private router: Router) {}
 
-  get isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+  ngOnInit() {
+    this.isLoggedIn = !!sessionStorage.getItem('token');
+  }
+
+  logout() {
+    sessionStorage.removeItem('token');
+    this.isLoggedIn = false;
+    this.router.navigate(['/login']);
   }
 
   toggleDropdown() {
@@ -24,9 +31,5 @@ export class NavbarComponent {
 
   viewProfile() {
     // Handle profile view
-  }
-
-  logout() {
-    // Handle logout
   }
 }
