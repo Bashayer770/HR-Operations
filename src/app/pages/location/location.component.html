@@ -30,16 +30,16 @@
         <h2 class="text-xl font-bold mb-4">Locations</h2>
           <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
             <div class="mb-4">
-              <label class="block text-gray-700 font-bold mb-2" for="descE">الاسم الانجليزي</label>
-              <input formControlName="descE" id="descE" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
-              @if(myForm.get('descE')?.touched && myForm.get('descE')?.invalid){
-                <small class="text-red-500">Description is required</small>
-              }            
-            </div>
-            <div class="mb-4">
               <label class="block text-gray-700 font-bold mb-2" for="descA">الاسم العربي</label>
               <input formControlName="descA" id="descA" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
               @if(myForm.get('descA')?.touched && myForm.get('descA')?.invalid){
+                <small class="text-red-500">Description is required</small>
+              }
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="descE">الاسم الانجليزي</label>
+              <input formControlName="descE" id="descE" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
+              @if(myForm.get('descE')?.touched && myForm.get('descE')?.invalid){
                 <small class="text-red-500">Description is required</small>
               }
             </div>

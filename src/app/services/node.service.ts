@@ -22,6 +22,9 @@ export class NodeService {
     updateNodes(node:MyNode): Observable<any>{
       return this._http.put<any>(`${API.NODES}/UpdateNode`, node)
     }
+      checkIfIdExists(id: string) {
+      return this._http.get<boolean>(`${API.NODES}/CheckIdExists/${id}`)
+  }
 
 }
 

@@ -4,6 +4,7 @@ import { NodeService } from '../../services/node.service';
 import { MyNode } from '../../models/MyNode';
 import { MyLocation } from '../../models/MyLocation';
 import { LocationService } from '../../services/location.service';
+import { uniqueIdValidator } from './custom-validators';
 
 @Component({
   selector: 'app-node',
@@ -23,7 +24,7 @@ export class NodeComponent implements OnInit {
     private locationService: LocationService,
     private nodeService: NodeService) {
     this.myForm = this.fb.group({
-      serialNo: ['', Validators.required],
+      serialNo: ['', Validators.required,uniqueIdValidator(this.nodeService)],
       descE: ['', Validators.required],
       descA: ['', Validators.required],
       locCode: ['', Validators.required],

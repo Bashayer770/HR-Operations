@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { API } from '../../../services/index';
 import { RegisterComponent } from '../../auth/register/register.component';
+import { EmployeeData } from '../../../models/Employee';
 
 @Component({
   selector: 'app-manage-users',
@@ -31,7 +32,7 @@ export class ManageUsersComponent implements OnInit {
 
   fetchUsers() {
     this.loading = true;
-    this.http.get<any[]>(API.EMPLOYEES).subscribe({
+    this.http.get<EmployeeData[]>(API.EMPLOYEES).subscribe({
       next: (data) => {
         this.users = data;
         this.loading = false;

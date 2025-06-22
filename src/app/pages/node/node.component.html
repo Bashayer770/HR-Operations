@@ -37,7 +37,9 @@
             <div class="mb-4">
               <label class="block text-gray-700 font-bold mb-2" for="serialNo">رقم الجهاز</label>
               <input formControlName="serialNo" id="serialNo" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
-              @if(myForm.get('serialNo')?.touched && myForm.get('serialNo')?.invalid){
+              @if(myForm.get('serialNo')?.errors?.['idExists'] && myForm.get('serialNo')?.touched){
+                    <small class="text-red-500">Id Already Exists</small>            
+              }@else if(myForm.get('serialNo')?.touched && myForm.get('serialNo')?.invalid){
                 <small class="text-red-500">Description is required</small>
               }
             </div>
