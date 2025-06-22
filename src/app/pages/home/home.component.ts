@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
       console.log(token);
       return jwtDecode<JwtPayload>(token);
     }
-    let jwt: JwtPayload = { empId: '', fingerCode: '', name: '' };
+    let jwt: JwtPayload = { empId: '', fingerCode: '', name: '', userInfo: '' };
     return jwt;
   };
 
