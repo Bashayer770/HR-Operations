@@ -78,7 +78,10 @@
     class="container mx-auto flex justify-between items-center bg-primary rounded-full px-6 h-16"
   >
     <!-- Left side -->
-    <div class="flex items-center space-x-4 relative" *ngIf="isLoggedIn">
+    <div
+      class="flex items-center space-x-4 relative"
+      *ngIf="isLoggedIn$ | async"
+    >
       <div class="group relative flex items-center">
         <button
           class="text-lg font-semibold hover:text-accent-foreground rounded-lg px-3 py-1 arabic-text flex items-center gap-2 focus:outline-none"
@@ -124,7 +127,7 @@
     </div>
 
     <!-- Right side -->
-    <div class="flex items-center space-x-4" *ngIf="isLoggedIn">
+    <div class="flex items-center space-x-4" *ngIf="isLoggedIn$ | async">
       <a
         routerLink="/user-info"
         class="hover:text-accent-foreground text-xl rounded-lg px-3 py-1 hover:bg-white arabic-text cursor-pointer"
