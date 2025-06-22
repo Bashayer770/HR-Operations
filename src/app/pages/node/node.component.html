@@ -1,88 +1,241 @@
-<div class="p-4">
-  <button (click)="openAddModal()" class="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Node</button>
+<div
+  class="flex flex-col items-center justify-start h-screen bg-gray-50 pt-10 arabic-text"
+>
+  <!-- Main Card -->
+  <div class="w-full max-w-4xl bg-white shadow-lg p-8 rounded-lg">
+    <!-- Header -->
+    <div
+      class="bg-primary text-white text-center py-4 rounded-t-lg -mx-8 -mt-8 mb-8"
+    >
+      <h2 class="block text-3xl font-sans arabic-text">إدارة الأجهزة</h2>
+    </div>
 
-  <table class="min-w-full bg-white shadow-md rounded">
-    <thead class="bg-gray-200">
-      <tr>
-        <th class="py-2 px-4 text-left">رقم الجهاز</th>
-        <th class="py-2 px-4 text-left">الفرع</th>
-        <th class="py-2 px-4 text-left">الاسم الانجليزي</th>
-        <th class="py-2 px-4 text-left">الاسم العربي</th>
-        <th class="py-2 px-4">تعديل/حذف</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (node of nodes; track $index) {
-        <tr class="border-b">
-          <td class="py-2 px-4">{{ node.serialNo }}</td>
-          <td class="py-2 px-4">{{ node.location?.descA }}</td>
-          <td class="py-2 px-4">{{ node.descE }}</td>
-          <td class="py-2 px-4">{{ node.descA }}</td>
-          <td class="py-2 px-4 flex gap-2 justify-center">
-            <button (click)="openEditModal(node)" class="bg-blue-500 text-white px-2 py-1 rounded">تعديل</button>
-            <button (click)="deleteNode(node.serialNo)" class="bg-red-500 text-white px-2 py-1 rounded">حذف</button>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
+    <!-- Controls -->
+    <div class="flex justify-between items-center mb-6">
+      <!-- Filter Inputs -->
+      <div class="flex gap-4">
+        <input
+          type="text"
+          placeholder="تصفية حسب الرقم التسلسلي"
+          class="w-full px-6 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
+        />
+        <input
+          type="text"
+          placeholder="تصفية حسب الاسم العربي"
+          class="w-full px-6 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
+        />
+      </div>
+      <!-- Add Button -->
+      <button
+        (click)="openAddModal()"
+        class="bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary/80 arabic-text"
+      >
+        إضافة جهاز
+      </button>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-hidden rounded-lg shadow-sm border border-gray-200">
+      <table class="min-w-full">
+        <thead class="bg-slate-50">
+          <tr>
+            <th
+              class="py-3 px-6 text-right text-gray-600 font-semibold arabic-text"
+            >
+              الرقم التسلسلي
+            </th>
+            <th
+              class="py-3 px-6 text-right text-gray-600 font-semibold arabic-text"
+            >
+              الموقع
+            </th>
+            <th
+              class="py-3 px-6 text-right text-gray-600 font-semibold arabic-text"
+            >
+              الاسم العربي
+            </th>
+            <th
+              class="py-3 px-6 text-right text-gray-600 font-semibold arabic-text"
+            >
+              الاسم الإنجليزي
+            </th>
+            <th
+              class="py-3 px-6 text-center text-gray-600 font-semibold arabic-text"
+            >
+              الإجراءات
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          @for (node of nodes; track $index) {
+          <tr class="hover:bg-gray-50">
+            <td class="py-3 px-6 arabic-text">{{ node.serialNo }}</td>
+            <td class="py-3 px-6 arabic-text">{{ node.location?.descA }}</td>
+            <td class="py-3 px-6 arabic-text">{{ node.descA }}</td>
+            <td class="py-3 px-6 arabic-text">{{ node.descE }}</td>
+            <td class="py-3 px-6 flex gap-2 justify-center">
+              <button
+                (click)="openEditModal(node)"
+                class="p-2 rounded-full text-white bg-cyan-700 hover:bg-cyan-800"
+                title="تعديل"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m14.304 4.844l2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565l6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                  ></path>
+                </svg>
+              </button>
+              <button
+                (click)="deleteNode(node.serialNo)"
+                class="p-2 rounded-full text-white bg-red-600 hover:bg-red-700"
+                title="حذف"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M5 21V6H4V4h5V3h6v1h5v2h-1v15zm2-2h10V6H7zm2-2h2V8H9zm4 0h2V8h-2zM7 6v13z"
+                  ></path>
+                </svg>
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
+<!-- Modal -->
 @if(isVisible){
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="bg-white rounded-2xl shadow-xl p-6 w-96 relative">
-        <h2 class="text-xl font-bold mb-4">Nodes</h2>
-          <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-
-            <div class="mb-4">
-              <label class="block text-gray-700 font-bold mb-2" for="serialNo">رقم الجهاز</label>
-              <input formControlName="serialNo" id="serialNo" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
-              @if(myForm.get('serialNo')?.errors?.['idExists'] && myForm.get('serialNo')?.touched){
-                    <small class="text-red-500">Id Already Exists</small>            
-              }@else if(myForm.get('serialNo')?.touched && myForm.get('serialNo')?.invalid){
-                <small class="text-red-500">Description is required</small>
-              }
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-gray-700 font-bold mb-2" for="descA">الاسم العربي</label>
-              <input formControlName="descA" id="descA" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
-              @if(myForm.get('descA')?.touched && myForm.get('descA')?.invalid){
-                <small class="text-red-500">Description is required</small>
-              }
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-gray-700 font-bold mb-2" for="descE">الاسم الانجليزي</label>
-              <input formControlName="descE" id="descE" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
-              @if(myForm.get('descE')?.touched && myForm.get('descE')?.invalid){
-                <small class="text-red-500">Description is required</small>
-              }            
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-gray-700 font-bold mb-2" for="locCode">مكان الجهاز</label>
-                <select class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" formControlName="locCode" id="locCode">
-                    @for (location of locations; track $index) {
-                        <option [value]="location.id">{{ location.descA }}</option>
-                    }
-                </select>
-              @if(myForm.get('locCode')?.touched && myForm.get('locCode')?.invalid){
-                <small class="text-red-500">Description is required</small>
-              }
-            </div>
-
-            <div class="mb-4">
-              <label class="block text-gray-700 font-bold mb-2" for="floor">الدور</label>
-              <input formControlName="floor" id="floor" type="text" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" />
-              @if(myForm.get('floor')?.touched && myForm.get('floor')?.invalid){
-                <small class="text-red-500">Description is required</small>
-              }
-            </div>
-
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">{{ isEditMode ? 'Update' : 'Add' }}</button>
-            <button (click)="close()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Close</button>
-          </form>
+<div
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+>
+  <div
+    class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-lg relative arabic-text"
+  >
+    <h2 class="text-2xl font-bold mb-6 text-center text-primary arabic-text">
+      {{ isEditMode ? "تعديل الجهاز" : "إضافة جهاز" }}
+    </h2>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label
+            class="block text-gray-700 font-bold mb-2 arabic-text"
+            for="serialNo"
+            >الرقم التسلسلي</label
+          >
+          <input
+            formControlName="serialNo"
+            id="serialNo"
+            type="text"
+            class="w-full px-4 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
+          />
+          @if(myForm.get('serialNo')?.errors?.['idExists'] &&
+          myForm.get('serialNo')?.touched){
+          <small class="text-red-500 arabic-text">الرقم التسلسلي موجود</small>
+          } @else if(myForm.get('serialNo')?.touched &&
+          myForm.get('serialNo')?.invalid){
+          <small class="text-red-500 arabic-text">الحقل مطلوب</small>
+          }
+        </div>
+        <div>
+          <label
+            class="block text-gray-700 font-bold mb-2 arabic-text"
+            for="locCode"
+            >مكان الجهاز</label
+          >
+          <select
+            class="w-full px-4 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
+            formControlName="locCode"
+            id="locCode"
+          >
+            @for (location of locations; track $index) {
+            <option [value]="location.id">{{ location.descA }}</option>
+            }
+          </select>
+          @if(myForm.get('locCode')?.touched && myForm.get('locCode')?.invalid){
+          <small class="text-red-500 arabic-text">الحقل مطلوب</small>
+          }
+        </div>
       </div>
+      <div class="mb-4">
+        <label
+          class="block text-gray-700 font-bold mb-2 arabic-text"
+          for="descA"
+          >الاسم العربي</label
+        >
+        <input
+          formControlName="descA"
+          id="descA"
+          type="text"
+          class="w-full px-4 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
+        />
+        @if(myForm.get('descA')?.touched && myForm.get('descA')?.invalid){
+        <small class="text-red-500 arabic-text">الحقل مطلوب</small>
+        }
+      </div>
+      <div class="mb-4">
+        <label
+          class="block text-gray-700 font-bold mb-2 arabic-text"
+          for="descE"
+          >الاسم الإنجليزي</label
+        >
+        <input
+          formControlName="descE"
+          id="descE"
+          type="text"
+          class="w-full px-4 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
+        />
+        @if(myForm.get('descE')?.touched && myForm.get('descE')?.invalid){
+        <small class="text-red-500 arabic-text">الحقل مطلوب</small>
+        }
+      </div>
+      <div class="mb-6">
+        <label
+          class="block text-gray-700 font-bold mb-2 arabic-text"
+          for="floor"
+          >الدور</label
+        >
+        <input
+          formControlName="floor"
+          id="floor"
+          type="text"
+          class="w-full px-4 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
+        />
+        @if(myForm.get('floor')?.touched && myForm.get('floor')?.invalid){
+        <small class="text-red-500 arabic-text">الحقل مطلوب</small>
+        }
+      </div>
+      <div class="flex justify-center gap-4">
+        <button
+          type="submit"
+          class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary/80 arabic-text"
+        >
+          {{ isEditMode ? "تحديث" : "إضافة" }}
+        </button>
+        <button
+          type="button"
+          (click)="close()"
+          class="w-full bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300 arabic-text"
+        >
+          إغلاق
+        </button>
+      </div>
+    </form>
   </div>
+</div>
 }
