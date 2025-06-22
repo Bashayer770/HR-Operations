@@ -10,7 +10,8 @@ import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../models/JwtPayload';
 import { ChatbotComponent } from '../../Components/chatbot/chatbot.component';
 import { AuthService } from '../../services/auth.service';
-import { TimingPlan } from '../../models/Employee';
+import { TimingPlan, EmployeeData } from '../../models/Employee';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-home',
@@ -62,7 +63,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private attendanceService: AttendanceService,
-    private authService: AuthService
+    private employeeService: EmployeeService
   ) {
     console.log('home');
   }
@@ -89,11 +90,12 @@ export class HomeComponent implements OnInit {
         this.remainingMinutes = 720 - this.usedMinutes;
       });
 
-    const user = this.authService.getUser();
-    if (user) {
-      this.userName = user.nameA;
-      this.timingPlan = user.timingPlan;
-    }
+    this.employeeService
+      .getEmployeeById(Number(decodedToken.empId))
+      .subscribe((employee: EmployeeData) => {
+        this.userName = employee.nameA;
+        this.timingPlan = employee.timingPlan;
+      });
   }
 
   convertTimeStringToDate(time: string): Date {
