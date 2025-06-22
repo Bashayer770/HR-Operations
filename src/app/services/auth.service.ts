@@ -42,6 +42,20 @@ export class AuthService {
     this.isLoggedInSubject.next(false);
   }
 
+  getUser(): any | null {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        return decodedToken;
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+      }
+    }
+    return null;
+  }
+
   changePassword(data: {
     currentPassword: string;
     newPassword: string;
