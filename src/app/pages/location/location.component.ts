@@ -1,25 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { LocationService } from '../../services/location.service';
 import { MyLocation } from '../../models/MyLocation';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-location',
-  imports:[ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './location.component.html',
   styleUrl: './location.component.css',
 })
 export class LocationComponent implements OnInit {
   locations: MyLocation[] = [];
+  filteredLocations: MyLocation[] = [];
   myForm: FormGroup;
   isVisible = false;
   isEditMode = false;
   currentLocationId: number | null = null;
+  filters = {
+    descA: '',
+  };
 
-  constructor(private fb: FormBuilder, private locationService: LocationService) {
+  constructor(
+    private fb: FormBuilder,
+    private locationService: LocationService
+  ) {
     this.myForm = this.fb.group({
       descE: ['', Validators.required],
-      descA: ['', Validators.required]
+      descA: ['', Validators.required],
     });
   }
 
@@ -29,8 +42,18 @@ export class LocationComponent implements OnInit {
 
   loadLocations() {
     this.locationService.getLocations().subscribe({
-      next: (res) => this.locations = res,
+      next: (res) => {
+        this.locations = res;
+        this.applyFilters();
+      },
       error: (err) => console.error(err),
+    });
+  }
+
+  applyFilters() {
+    this.filteredLocations = this.locations.filter((location) => {
+      const descA = (location.descA || '').toLowerCase();
+      return descA.includes(this.filters.descA.toLowerCase());
     });
   }
 
@@ -54,8 +77,7 @@ export class LocationComponent implements OnInit {
   }
 
   onSubmit() {
-    if(!this.isVisible)
-      return;
+    if (!this.isVisible) return;
 
     if (this.myForm.invalid) {
       this.myForm.markAllAsTouched();
