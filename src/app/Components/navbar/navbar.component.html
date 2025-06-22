@@ -84,7 +84,7 @@
     >
       <div class="group relative flex items-center">
         <button
-          class="text-lg font-semibold hover:text-accent-foreground rounded-lg px-3 py-1 arabic-text flex items-center gap-2 focus:outline-none"
+          class="text-lg font-semibold hover:text-accent-foreground hover:bg-white rounded-lg px-3 py-1 arabic-text flex items-center gap-2 focus:outline-none"
           type="button"
           tabindex="0"
         >
@@ -110,16 +110,22 @@
         >
           <div class="py-1">
             <a
-              href="#"
+              routerLink="/location"
               class="block px-4 py-2 text-lg text-primary hover:bg-primary hover:text-white arabic-text text-right transition-colors"
             >
-              إضافة موقع
+              إدارة المواقع
             </a>
             <a
-              href="#"
+              routerLink="/node"
               class="block px-4 py-2 text-lg text-primary hover:bg-primary hover:text-white arabic-text text-right transition-colors"
             >
-              إضافة جهاز
+              إدارة الأجهزة
+            </a>
+            <a
+              routerLink="/manage-users"
+              class="block px-4 py-2 text-lg text-primary hover:bg-primary hover:text-white arabic-text text-right transition-colors"
+            >
+              إدارة المستخدمين
             </a>
           </div>
         </div>

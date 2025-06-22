@@ -17,19 +17,13 @@
         <input
           type="text"
           [(ngModel)]="filters.name"
-          placeholder="تصفية حسب الاسم"
+          placeholder="الاسم"
           class="w-full px-6 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
         />
         <input
           type="text"
-          [(ngModel)]="filters.username"
-          placeholder="تصفية حسب اسم الدخول"
-          class="w-full px-6 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
-        />
-        <input
-          type="text"
-          [(ngModel)]="filters.department"
-          placeholder="تصفية حسب القسم"
+          [(ngModel)]="filters.fingerCode"
+          placeholder=" كود البصمة"
           class="w-full px-6 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
         />
       </div>
@@ -56,21 +50,18 @@
             {{ error }}
           </div>
           <table class="min-w-full" *ngIf="!loading && !error">
-            <thead class="bg-slate-50">
+            <thead class="bg-primary text-white">
               <tr>
-                <th
-                  class="py-3 px-6 text-right text-gray-600 font-semibold arabic-text"
-                >
+                <th class="py-3 px-6 text-right font-semibold arabic-text">
                   الاسم
                 </th>
-                <th
-                  class="py-3 px-6 text-right text-gray-600 font-semibold arabic-text"
-                >
+                <th class="py-3 px-6 text-right font-semibold arabic-text">
+                  كود البصمة
+                </th>
+                <th class="py-3 px-6 text-right font-semibold arabic-text">
                   البريد الإلكتروني
                 </th>
-                <th
-                  class="py-3 px-6 text-center text-gray-600 font-semibold arabic-text"
-                >
+                <th class="py-3 px-6 text-center font-semibold arabic-text">
                   الإجراءات
                 </th>
               </tr>
@@ -86,12 +77,15 @@
                   {{ user.nameE || user.NameE }}
                 </td>
                 <td class="py-3 px-6 arabic-text">
+                  {{ user.fingerCode }}
+                </td>
+                <td class="py-3 px-6 arabic-text">
                   {{ user.email || user.Email }}
                 </td>
                 <td class="py-3 px-6 flex items-center justify-center gap-2">
                   <button
                     (click)="editUser(user); $event.stopPropagation()"
-                    class="p-2 rounded-full text-white bg-cyan-700 hover:bg-cyan-800 transition-colors"
+                    class="p-2 rounded-full text-cyan-700 hover:bg-cyan-50 transition-colors"
                     title="تعديل"
                   >
                     <svg
@@ -111,7 +105,7 @@
                   </button>
                   <button
                     (click)="softDeleteUser(user); $event.stopPropagation()"
-                    class="p-2 rounded-full text-white bg-red-600 hover:bg-red-700 transition-colors"
+                    class="p-2 rounded-full text-red-600 hover:bg-red-50 transition-colors"
                     title="حذف"
                   >
                     <svg
@@ -146,18 +140,14 @@
             {{ selectedUser.email || selectedUser.Email }}
           </p>
           <p class="arabic-text">
+            <span class="font-semibold">كود البصمة:</span>
+            {{ selectedUser.fingerCode }}
+          </p>
+          <p class="arabic-text">
             <span class="font-semibold">رقم الموظف:</span>
             {{ selectedUser.id || selectedUser.Id }}
           </p>
           <!-- Add more fields as needed -->
-        </div>
-        <div
-          *ngIf="!selectedUser"
-          class="bg-slate-50 rounded-lg shadow-sm border border-gray-200 p-6 h-full flex items-center justify-center"
-        >
-          <p class="text-gray-500 arabic-text">
-            الرجاء اختيار مستخدم لعرض التفاصيل
-          </p>
         </div>
       </div>
     </div>
@@ -174,3 +164,19 @@
     <app-register (closeModal)="closeRegisterModal()"></app-register>
   </div>
 </div>
+
+<!-- Edit User Modal -->
+<app-edit-user-modal
+  *ngIf="showEditModal"
+  [user]="userToEdit"
+  (close)="closeEditModal()"
+  (save)="saveUser($event)"
+></app-edit-user-modal>
+
+<!-- Delete User Modal -->
+<app-delete-user-modal
+  *ngIf="showDeleteModal"
+  [user]="userToDelete"
+  (close)="closeDeleteModal()"
+  (confirm)="confirmDelete()"
+></app-delete-user-modal>
