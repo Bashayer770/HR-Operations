@@ -61,6 +61,9 @@
                 <th class="py-3 px-6 text-right font-semibold arabic-text">
                   البريد الإلكتروني
                 </th>
+                <th class="py-3 px-6 text-right font-semibold arabic-text">
+                  خطة الدوام
+                </th>
                 <th class="py-3 px-6 text-center font-semibold arabic-text">
                   الإجراءات
                 </th>
@@ -74,13 +77,24 @@
                 [class.bg-gray-100]="selectedUser?.id === user.id"
               >
                 <td class="py-3 px-6 arabic-text">
-                  {{ user.nameE || user.NameE }}
+                  {{ user.nameE }}
                 </td>
                 <td class="py-3 px-6 arabic-text">
                   {{ user.fingerCode }}
                 </td>
                 <td class="py-3 px-6 arabic-text">
-                  {{ user.email || user.Email }}
+                  {{ user.email }}
+                </td>
+                <td class="py-3 px-6">
+                  <select
+                    [ngModel]="user.timingPlan?.id"
+                    (change)="onTimingPlanChange(user, $event)"
+                    class="w-full bg-transparent border-none rounded-md focus:ring-0 focus:outline-none arabic-text"
+                  >
+                    <option *ngFor="let plan of timingPlans" [value]="plan.id">
+                      {{ plan.DescA }}
+                    </option>
+                  </select>
                 </td>
                 <td class="py-3 px-6 flex items-center justify-center gap-2">
                   <button
@@ -133,11 +147,15 @@
           class="bg-slate-50 rounded-lg shadow-sm border border-gray-200 p-6 h-full"
         >
           <h3 class="text-xl font-bold mb-4 arabic-text text-primary">
-            {{ selectedUser.nameE || selectedUser.NameE }}
+            {{ selectedUser.nameE }}
           </h3>
           <p class="arabic-text">
+            <span class="font-semibold">الاسم العربي:</span>
+            {{ selectedUser.nameA }}
+          </p>
+          <p class="arabic-text">
             <span class="font-semibold">البريد الإلكتروني:</span>
-            {{ selectedUser.email || selectedUser.Email }}
+            {{ selectedUser.email }}
           </p>
           <p class="arabic-text">
             <span class="font-semibold">كود البصمة:</span>
@@ -145,9 +163,46 @@
           </p>
           <p class="arabic-text">
             <span class="font-semibold">رقم الموظف:</span>
-            {{ selectedUser.id || selectedUser.Id }}
+            {{ selectedUser.id }}
+          </p>
+          <p class="arabic-text">
+            <span class="font-semibold">القسم:</span>
+            {{ selectedUser.deptCode }}
+          </p>
+          <p class="arabic-text" *ngIf="selectedUser.timingPlan">
+            <span class="font-semibold">خطة الدوام:</span>
+            {{ selectedUser.timingPlan.DescA }}
+          </p>
+          <p class="arabic-text">
+            <span class="font-semibold">نوع الوظيفة:</span>
+            {{ selectedUser.jobType === 1 ? "دوام كامل" : "دوام جزئي" }}
+          </p>
+          <p class="arabic-text">
+            <span class="font-semibold">الجنس:</span>
+            {{ selectedUser.sex === 1 ? "ذكر" : "أنثى" }}
+          </p>
+          <p class="arabic-text">
+            <span class="font-semibold">يحتسب التأخير:</span>
+            {{ selectedUser.checkLate ? "نعم" : "لا" }}
+          </p>
+          <p class="arabic-text">
+            <span class="font-semibold">لديه بدل:</span>
+            {{ selectedUser.hasAllow ? "نعم" : "لا" }}
+          </p>
+          <p class="arabic-text">
+            <span class="font-semibold">فعال:</span>
+            {{ selectedUser.isActive ? "نعم" : "لا" }}
           </p>
           <!-- Add more fields as needed -->
+
+          <div class="mt-6">
+            <button
+              (click)="openAttendanceModal(selectedUser)"
+              class="w-full bg-slate-200 hover:bg-slate-300 text-slate-800 py-2 px-4 rounded-lg arabic-text"
+            >
+              عرض سجل الحضور
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -180,3 +235,10 @@
   (close)="closeDeleteModal()"
   (confirm)="confirmDelete()"
 ></app-delete-user-modal>
+
+<!-- Attendance Details Modal -->
+<app-attendance-details-modal
+  *ngIf="showAttendanceModal"
+  [user]="userForAttendance!"
+  (close)="closeAttendanceModal()"
+></app-attendance-details-modal>
