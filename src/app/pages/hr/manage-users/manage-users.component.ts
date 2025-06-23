@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { API } from '../../../services/index';
 import { RegisterComponent } from '../../auth/register/register.component';
 import { EmployeeData } from '../../../models/Employee';
@@ -50,12 +51,25 @@ export class ManageUsersComponent implements OnInit {
   showAllowModal = false;
   allows: TimingPlan[] = [];
   departments: any[] = [];
+  showReports = false;
+  reportStartDate: string;
+  reportEndDate: string;
+  selectedReport: string = 'attendance';
+  reportUrl: SafeResourceUrl | null = null;
 
   constructor(
     private http: HttpClient,
     private timingPlanService: TimingPlanService,
-    private employeeService: EmployeeService
-  ) {}
+    private employeeService: EmployeeService,
+    private sanitizer: DomSanitizer
+  ) {
+    // Set default dates
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    this.reportStartDate = firstDayOfMonth.toISOString().split('T')[0];
+    this.reportEndDate = today.toISOString().split('T')[0];
+  }
 
   ngOnInit() {
     this.fetchUsers();
@@ -68,7 +82,7 @@ export class ManageUsersComponent implements OnInit {
     this.loading = true;
     this.http.get<EmployeeData[]>(API.EMPLOYEES).subscribe({
       next: (data: EmployeeData[]) => {
-        console.log(data)
+        console.log(data);
         this.users = data;
         this.loading = false;
       },
@@ -228,21 +242,18 @@ export class ManageUsersComponent implements OnInit {
       this.userForAllow
     );
 
-    let empAllow:EmployeeAllow = 
-    {
+    let empAllow: EmployeeAllow = {
       id: 0,
-      empId: this.userForAllow?.id?? 0,
+      empId: this.userForAllow?.id ?? 0,
       startDate: new Date(),
       endDate: new Date(),
       timingCode: selectedAllow.id,
-      status: true
+      status: true,
     };
-
-
 
     this.http.post<any>(API.ADD_EMPLOYEE_ALLOWS, empAllow).subscribe({
       next: (data: any) => {
-        console.log(data)
+        console.log(data);
         // this.users = data;
         this.loading = false;
       },
@@ -258,5 +269,27 @@ export class ManageUsersComponent implements OnInit {
   getDepartmentName(deptCode: number): string {
     const dept = this.departments.find((d) => d.deptCode === deptCode);
     return dept ? dept.descA : deptCode.toString();
+  }
+
+  generateReport() {
+    if (!this.reportStartDate || !this.reportEndDate) return;
+
+    const requestBody = {
+      fromDate: this.reportStartDate,
+      toDate: this.reportEndDate,
+    };
+
+    this.http
+      .post(API.REPORTS.ATTENDANCE, requestBody, { responseType: 'blob' })
+      .subscribe({
+        next: (blob: Blob) => {
+          const url = window.URL.createObjectURL(blob);
+          this.reportUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        },
+        error: (error) => {
+          console.error('Failed to generate report:', error);
+          // Handle error appropriately
+        },
+      });
   }
 }

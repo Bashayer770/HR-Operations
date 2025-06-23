@@ -28,12 +28,34 @@
         />
       </div>
       <!-- Add Button -->
-      <button
-        (click)="addUser()"
-        class="bg-primary text-white py-4 px-8 rounded-lg hover:bg-primary/80 arabic-text whitespace-nowrap"
-      >
-        إضافة مستخدم
-      </button>
+      <div class="flex gap-4">
+        <button
+          (click)="addUser()"
+          class="bg-primary text-white py-4 px-8 rounded-lg hover:bg-primary/80 arabic-text whitespace-nowrap"
+        >
+          إضافة مستخدم
+        </button>
+        <button
+          (click)="showReports = true"
+          class="bg-primary text-white py-4 px-8 rounded-lg hover:bg-primary/80 arabic-text whitespace-nowrap flex items-center gap-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="w-6 h-6"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2m-6 4h8m-8 4h4"
+            ></path>
+          </svg>
+          التقارير
+        </button>
+      </div>
     </div>
 
     <!-- Content: Table and Details -->
@@ -257,3 +279,113 @@
   (close)="closeAllowModal()"
   (save)="onAllowSave($event)"
 ></app-allow-modal>
+
+<!-- Reports Modal -->
+<div
+  *ngIf="showReports"
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  (click)="showReports = false"
+>
+  <div
+    class="bg-white w-[90vw] h-[90vh] rounded-lg shadow-xl"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Header -->
+    <div class="bg-primary p-4 rounded-t-lg flex justify-between items-center">
+      <h2 class="text-2xl font-bold text-white arabic-text">التقارير</h2>
+      <button
+        (click)="showReports = false"
+        class="text-white hover:text-gray-200"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          class="w-6 h-6"
+        >
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L17.94 6M18 18L6.06 6"
+          ></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Report Controls -->
+    <div class="p-6 border-b" dir="rtl">
+      <div class="grid grid-cols-3 gap-6 items-end">
+        <div>
+          <label class="block mb-2 text-gray-700 font-medium arabic-text"
+            >من تاريخ</label
+          >
+          <input
+            type="date"
+            [(ngModel)]="reportStartDate"
+            class="w-full px-4 h-10 border border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:border-primary hover:bg-slate-50 text-right"
+          />
+        </div>
+        <div>
+          <label class="block mb-2 text-gray-700 font-medium arabic-text"
+            >إلى تاريخ</label
+          >
+          <input
+            type="date"
+            [(ngModel)]="reportEndDate"
+            class="w-full px-4 h-10 border border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:border-primary hover:bg-slate-50 text-right"
+          />
+        </div>
+        <div>
+          <label class="block mb-2 text-gray-700 font-medium arabic-text"
+            >نوع التقرير</label
+          >
+          <select
+            [(ngModel)]="selectedReport"
+            class="w-full px-4 h-10 border border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:border-primary hover:bg-slate-50 text-right arabic-text"
+          >
+            <option value="attendance">الحضور و الانصراف</option>
+          </select>
+        </div>
+      </div>
+      <div class="mt-4 flex justify-end">
+        <button
+          (click)="generateReport()"
+          class="bg-primary text-white py-2.5 px-6 rounded-lg hover:bg-primary/80 arabic-text flex items-center gap-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            class="w-5 h-5"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 10v6m0 0l-3-3m3 3l3-3M3 17v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3M14 7V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3"
+            ></path>
+          </svg>
+          تحميل التقرير
+        </button>
+      </div>
+    </div>
+
+    <!-- PDF Viewer Container -->
+    <div class="p-6 bg-gray-100 h-[calc(90vh-220px)] overflow-auto">
+      <div *ngIf="!reportUrl" class="flex items-center justify-center h-full">
+        <p class="text-gray-500 arabic-text text-lg">
+          اختر المعايير واضغط على تحميل التقرير
+        </p>
+      </div>
+      <iframe
+        *ngIf="reportUrl"
+        [src]="reportUrl"
+        class="w-full h-full rounded-lg shadow-lg"
+        frameborder="0"
+      ></iframe>
+    </div>
+  </div>
+</div>
