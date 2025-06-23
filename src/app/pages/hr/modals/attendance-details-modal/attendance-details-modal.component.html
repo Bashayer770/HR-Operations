@@ -37,26 +37,10 @@
     <!-- Filters -->
     <div class="flex gap-4 mb-4">
       <div>
-        <label class="block mb-1 arabic-text">تاريخ</label>
+        <label class="block mb-1 arabic-text">الشهر</label>
         <input
-          type="date"
-          [(ngModel)]="filterDate"
-          class="border rounded px-3 py-2 arabic-text"
-        />
-      </div>
-      <div>
-        <label class="block mb-1 arabic-text">من</label>
-        <input
-          type="time"
-          [(ngModel)]="filterFrom"
-          class="border rounded px-3 py-2 arabic-text"
-        />
-      </div>
-      <div>
-        <label class="block mb-1 arabic-text">إلى</label>
-        <input
-          type="time"
-          [(ngModel)]="filterTo"
+          type="month"
+          [(ngModel)]="filterMonth"
           class="border rounded px-3 py-2 arabic-text"
         />
       </div>

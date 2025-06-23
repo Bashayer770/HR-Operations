@@ -43,6 +43,43 @@
           class="border rounded px-4 py-2 w-full arabic-text"
         />
       </div>
+      <div *ngIf="timingPlans.length" class="mb-4">
+        <label class="block mb-1 arabic-text">خطة الدوام</label>
+        <select
+          [(ngModel)]="editedUser.timingPlan"
+          name="timingPlan"
+          class="border rounded px-4 py-2 w-full arabic-text"
+        >
+          <option *ngFor="let plan of timingPlans" [ngValue]="plan">
+            {{ plan.DescA }}
+          </option>
+        </select>
+      </div>
+      <div *ngIf="editedUser.timingPlan" class="mb-4">
+        <label class="block mb-1 arabic-text"
+          >خطة الدوام: {{ editedUser.timingPlan.DescA }}</label
+        >
+        <div class="flex gap-2">
+          <div class="flex-1">
+            <label class="block mb-1 arabic-text">من</label>
+            <input
+              type="time"
+              [(ngModel)]="editedUser.timingPlan.FromTime"
+              name="fromTime"
+              class="border rounded px-4 py-2 w-full arabic-text"
+            />
+          </div>
+          <div class="flex-1">
+            <label class="block mb-1 arabic-text">إلى</label>
+            <input
+              type="time"
+              [(ngModel)]="editedUser.timingPlan.ToTime"
+              name="toTime"
+              class="border rounded px-4 py-2 w-full arabic-text"
+            />
+          </div>
+        </div>
+      </div>
       <div class="flex justify-end gap-2">
         <button
           type="button"

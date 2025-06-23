@@ -47,6 +47,7 @@ export class ManageUsersComponent implements OnInit {
   showAttendanceModal = false;
   showAllowModal = false;
   allows: any[] = [];
+  departments: any[] = [];
 
   constructor(
     private http: HttpClient,
@@ -58,6 +59,7 @@ export class ManageUsersComponent implements OnInit {
     this.fetchUsers();
     this.fetchTimingPlans();
     this.fetchAllows();
+    this.fetchDepartments();
   }
 
   fetchUsers() {
@@ -92,6 +94,17 @@ export class ManageUsersComponent implements OnInit {
       },
       error: (err: any) => {
         console.error('Failed to load allows', err);
+      },
+    });
+  }
+
+  fetchDepartments() {
+    this.http.get<any[]>(API.DEPARTMENTS).subscribe({
+      next: (data: any[]) => {
+        this.departments = data;
+      },
+      error: (err: any) => {
+        console.error('Failed to load departments', err);
       },
     });
   }
@@ -212,5 +225,10 @@ export class ManageUsersComponent implements OnInit {
       this.userForAllow
     );
     this.closeAllowModal();
+  }
+
+  getDepartmentName(deptCode: number): string {
+    const dept = this.departments.find((d) => d.deptCode === deptCode);
+    return dept ? dept.descA : deptCode.toString();
   }
 }

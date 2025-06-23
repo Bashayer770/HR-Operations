@@ -159,11 +159,19 @@
           </p>
           <p class="arabic-text">
             <span class="font-semibold">القسم:</span>
-            {{ selectedUser.deptCode }}
+            {{ getDepartmentName(selectedUser.deptCode) }}
           </p>
           <p class="arabic-text" *ngIf="selectedUser.timingPlan">
             <span class="font-semibold">خطة الدوام:</span>
             {{ selectedUser.timingPlan.DescA }}
+          </p>
+          <p class="arabic-text" *ngIf="selectedUser.timingPlan">
+            <span class="font-semibold">من:</span>
+            {{ selectedUser.timingPlan.FromTime }}
+          </p>
+          <p class="arabic-text" *ngIf="selectedUser.timingPlan">
+            <span class="font-semibold">إلى:</span>
+            {{ selectedUser.timingPlan.ToTime }}
           </p>
           <p class="arabic-text">
             <span class="font-semibold">نوع الوظيفة:</span>
@@ -178,7 +186,7 @@
             {{ selectedUser.checkLate ? "نعم" : "لا" }}
           </p>
           <p class="arabic-text">
-            <span class="font-semibold">لديه بدل:</span>
+            <span class="font-semibold">لديه تخفيف:</span>
             {{ selectedUser.hasAllow ? "نعم" : "لا" }}
           </p>
           <p class="arabic-text">
@@ -190,15 +198,15 @@
           <div class="mt-6 flex flex-col gap-2">
             <button
               (click)="openAttendanceModal(selectedUser)"
-              class="w-full bg-slate-200 hover:bg-slate-300 text-slate-800 py-2 px-4 rounded-lg arabic-text"
+              class="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/80 arabic-text"
             >
               عرض سجل الحضور
             </button>
             <button
               (click)="openAllowModal(selectedUser)"
-              class="w-full bg-green-200 hover:bg-green-300 text-green-800 py-2 px-4 rounded-lg arabic-text"
+              class="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/80 arabic-text"
             >
-              إضافة بدل
+              إضافة تخفيف
             </button>
           </div>
         </div>
