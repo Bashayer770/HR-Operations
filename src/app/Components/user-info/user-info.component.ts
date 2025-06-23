@@ -5,6 +5,8 @@ import { API } from '../../services/index';
 import { JwtPayload, UserInfo } from '../../models/JwtPayload';
 import { jwtDecode } from 'jwt-decode';
 import { EmployeeData } from '../../models/Employee';
+import { DataService } from '../../services/data.service';
+import { Department } from '../../models/Department';
 
 @Component({
   selector: 'app-user-info',
@@ -18,8 +20,8 @@ export class UserInfoComponent implements OnInit {
   userProfile: EmployeeData|null = null;
   loading = false;
   error: string | null = null;
-
-  constructor(private http: HttpClient) {
+  departments: Department[] = [];
+  constructor(private http: HttpClient, private _data: DataService) {
 
   const token = sessionStorage.getItem('token') ?? '';
     const decodedToken: JwtPayload = jwtDecode(token);
@@ -42,11 +44,17 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit() {
     this.fetchUserProfile();
+      this._data.getDepartments().subscribe(res => {
+    this.departments = res;
+  });
   }
 
   fetchUsers() {  
   }
-
+department(deptId: number): string {
+  const dept = this.departments.find(x => x.deptCode === deptId);
+  return dept ? dept.descA : 'Unknown';
+}
   fetchUserProfile() {
     // this.http.get(API.AUTH.USER_INFO).subscribe({
     //   next: (data) => {

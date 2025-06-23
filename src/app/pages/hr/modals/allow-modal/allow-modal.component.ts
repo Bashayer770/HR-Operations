@@ -34,7 +34,7 @@ export class AllowModalComponent {
 
     this.loading = true;
     this.save.emit({
-      allow: this.selectedAllow,
+      selectedAllow: this.selectedAllow,
       fromDate: this.fromDate,
       toDate: this.toDate,
     });

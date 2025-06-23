@@ -249,13 +249,13 @@ let a = {
     this.userForAllow = null;
   }
     onRegistrationSuccess() {
-    this.showRegisterModal = false; // Close the modal
+    this.showRegisterModal = false; 
   }
 
-  onAllowSave(selectedAllow: TimingPlan) {
+  onAllowSave(allow: Allow) {
     console.log(
       'Selected Allow:',
-      selectedAllow,
+      allow.selectedAllow,
       'for user:',
       this.userForAllow
     );
@@ -263,9 +263,9 @@ let a = {
     let empAllow: EmployeeAllow = {
       id: 0,
       empId: this.userForAllow?.id ?? 0,
-      startDate: new Date(),
-      endDate: new Date(),
-      timingCode: selectedAllow.id,
+      startDate: allow.fromDate,
+      endDate: allow.toDate,
+      timingCode: allow.selectedAllow.id,
       status: true,
     };
 
@@ -315,4 +315,10 @@ let a = {
         },
       });
   }
+}
+
+export interface Allow{
+  selectedAllow: TimingPlan,
+  fromDate: Date,
+  toDate:Date
 }
