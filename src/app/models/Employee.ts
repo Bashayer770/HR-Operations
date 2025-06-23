@@ -1,3 +1,5 @@
+import { TimingPlan } from "./TimingPlan";
+
 export interface EmployeeData{              
   id: number;
   email: string;
@@ -13,13 +15,13 @@ export interface EmployeeData{
   isActive: boolean;
 }
 
-export interface TimingPlan{
-  id :number;
-  DescA :string;
-  DescE :string;
-  FromTime :Date;
-  ToTime :Date;
-  RmdFromTime :Date;
-  RmdToTime :Date;
-  IsRamadan :boolean;
-}
+// export interface TimingPlan{
+//   id :number;
+//   descA :string;
+//   descE :string;
+//   fromTime :Date;
+//   toTime :Date;
+//   rmdFromTime :Date;
+//   rmdToTime :Date;
+//   isRamadan :boolean;
+// }

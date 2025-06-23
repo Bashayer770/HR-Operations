@@ -86,7 +86,7 @@
                   {{ user.email }}
                 </td>
                 <td class="py-4 px-8 arabic-text">
-                  {{ user.timingPlan.DescA }}
+                  {{ user.timingPlan.descA }}
                 </td>
                 <td class="py-4 px-8 flex items-center justify-center gap-2">
                   <button
@@ -163,15 +163,15 @@
           </p>
           <p class="arabic-text" *ngIf="selectedUser.timingPlan">
             <span class="font-semibold">خطة الدوام:</span>
-            {{ selectedUser.timingPlan.DescA }}
+            {{ selectedUser.timingPlan.descA }}
           </p>
           <p class="arabic-text" *ngIf="selectedUser.timingPlan">
             <span class="font-semibold">من:</span>
-            {{ selectedUser.timingPlan.FromTime }}
+            {{ selectedUser.timingPlan.fromTime }}
           </p>
           <p class="arabic-text" *ngIf="selectedUser.timingPlan">
             <span class="font-semibold">إلى:</span>
-            {{ selectedUser.timingPlan.ToTime }}
+            {{ selectedUser.timingPlan.toTime }}
           </p>
           <p class="arabic-text">
             <span class="font-semibold">نوع الوظيفة:</span>

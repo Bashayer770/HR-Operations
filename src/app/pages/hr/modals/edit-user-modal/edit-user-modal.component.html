@@ -50,8 +50,8 @@
           name="timingPlan"
           class="border rounded px-4 py-2 w-full arabic-text"
         >
-          <option *ngFor="let plan of timingPlans" [ngValue]="plan">
-            {{ plan.DescA }}
+          <option *ngFor="let plan of nonallowTimingPlans" [ngValue]="plan">
+            {{ plan.descA }}
           </option>
         </select>
       </div>

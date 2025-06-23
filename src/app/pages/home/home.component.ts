@@ -10,8 +10,9 @@ import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../models/JwtPayload';
 import { ChatbotComponent } from '../../Components/chatbot/chatbot.component';
 import { AuthService } from '../../services/auth.service';
-import { TimingPlan, EmployeeData } from '../../models/Employee';
+import { EmployeeData } from '../../models/Employee';
 import { EmployeeService } from '../../services/employee.service';
+import { TimingPlan } from '../../models/TimingPlan';
 
 @Component({
   selector: 'app-home',
@@ -101,9 +102,11 @@ export class HomeComponent implements OnInit {
         this.remainingMinutes = 720 - this.usedMinutes;
       });
 
+      console.log("TEST EMPLOYEE SERVICE WITH ID: " + this.empId)
     this.employeeService
       .getEmployeeById(Number(this.empId))
       .subscribe((employee: EmployeeData) => {
+        console.log(employee);
         this.timingPlan = employee.timingPlan;
       });
   }
@@ -114,4 +117,11 @@ export class HomeComponent implements OnInit {
     now.setHours(hours, minutes, seconds);
     return now;
   }
+
+  getTimeAsDate(time: string): Date {
+  const today = new Date();
+  const [hours, minutes, seconds] = time.split(':').map(Number);
+  return new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes, seconds);
+}
+
 }

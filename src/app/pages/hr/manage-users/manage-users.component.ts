@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { API } from '../../../services/index';
 import { RegisterComponent } from '../../auth/register/register.component';
-import { EmployeeData, TimingPlan } from '../../../models/Employee';
+import { EmployeeData } from '../../../models/Employee';
 import { TimingPlanService } from '../../../services/timing-plan.service';
 import { EmployeeService } from '../../../services/employee.service';
 import { EditUserModalComponent } from '../modals/edit-user-modal/edit-user-modal.component';
@@ -12,6 +12,8 @@ import { DeleteUserModalComponent } from '../modals/delete-user-modal/delete-use
 import { AddUserModalComponent } from '../modals/add-user-modal/add-user-modal.component';
 import { AttendanceDetailsModalComponent } from '../modals/attendance-details-modal/attendance-details-modal.component';
 import { AllowModalComponent } from '../modals/allow-modal/allow-modal.component';
+import { TimingPlan } from '../../../models/TimingPlan';
+import { EmployeeAllow } from '../../../models/EmployeeAllow';
 
 @Component({
   selector: 'app-manage-users',
@@ -46,7 +48,7 @@ export class ManageUsersComponent implements OnInit {
   showDeleteModal = false;
   showAttendanceModal = false;
   showAllowModal = false;
-  allows: any[] = [];
+  allows: TimingPlan[] = [];
   departments: any[] = [];
 
   constructor(
@@ -66,6 +68,7 @@ export class ManageUsersComponent implements OnInit {
     this.loading = true;
     this.http.get<EmployeeData[]>(API.EMPLOYEES).subscribe({
       next: (data: EmployeeData[]) => {
+        console.log(data)
         this.users = data;
         this.loading = false;
       },
@@ -77,7 +80,7 @@ export class ManageUsersComponent implements OnInit {
   }
 
   fetchTimingPlans() {
-    this.timingPlanService.getTimingPlans().subscribe({
+    this.timingPlanService.getTimingPlansNonAllow().subscribe({
       next: (data: TimingPlan[]) => {
         this.timingPlans = data;
       },
@@ -88,8 +91,8 @@ export class ManageUsersComponent implements OnInit {
   }
 
   fetchAllows() {
-    this.http.get<any[]>(API.GET_EMPLOYEE_ALLOWS).subscribe({
-      next: (data: any[]) => {
+    this.http.get<TimingPlan[]>(API.GET_ALLOW_TIME_PLAN).subscribe({
+      next: (data: TimingPlan[]) => {
         this.allows = data;
       },
       error: (err: any) => {
@@ -217,13 +220,38 @@ export class ManageUsersComponent implements OnInit {
     this.userForAllow = null;
   }
 
-  onAllowSave(selectedAllow: any) {
+  onAllowSave(selectedAllow: TimingPlan) {
     console.log(
       'Selected Allow:',
       selectedAllow,
       'for user:',
       this.userForAllow
     );
+
+    let empAllow:EmployeeAllow = 
+    {
+      id: 0,
+      empId: this.userForAllow?.id?? 0,
+      startDate: new Date(),
+      endDate: new Date(),
+      timingCode: selectedAllow.id,
+      status: true
+    };
+
+
+
+    this.http.post<any>(API.ADD_EMPLOYEE_ALLOWS, empAllow).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        // this.users = data;
+        this.loading = false;
+      },
+      error: (err: any) => {
+        this.error = err.error || 'فشل تحميل المستخدمين';
+        this.loading = false;
+      },
+    });
+
     this.closeAllowModal();
   }
 

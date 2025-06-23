@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TimingPlan } from '../../../../models/TimingPlan';
 
 @Component({
   selector: 'app-allow-modal',
@@ -11,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class AllowModalComponent {
   @Input() user: any;
-  @Input() allows: any[] = [];
+  @Input() allows: TimingPlan[] = [];
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 

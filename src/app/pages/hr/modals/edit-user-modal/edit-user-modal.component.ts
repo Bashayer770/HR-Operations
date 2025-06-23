@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { API } from '../../../../services/index';
+import { TimingPlan } from '../../../../models/TimingPlan';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -17,8 +18,9 @@ export class EditUserModalComponent implements OnInit {
   @Output() save = new EventEmitter<any>();
 
   editedUser: any = {};
-  timingPlans: any[] = [];
-
+  timingPlans: TimingPlan[] = [];
+  nonallowTimingPlans:TimingPlan[] = [];
+  
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -27,7 +29,16 @@ export class EditUserModalComponent implements OnInit {
   }
 
   fetchTimingPlans() {
-    this.http.get<any[]>(API.GET_TIMING_PLAN).subscribe({
+    this.http.get<any[]>(API.GET_TIME_PLANS_NON_ALLOW).subscribe({
+      next: (data) => {
+        this.nonallowTimingPlans = data;
+      },
+      error: (err) => {
+        console.error('Failed to load timing plans', err);
+      },
+    });
+
+     this.http.get<any[]>(API.GET_TIMING_PLAN).subscribe({
       next: (data) => {
         this.timingPlans = data;
       },

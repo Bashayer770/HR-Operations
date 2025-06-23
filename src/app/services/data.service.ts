@@ -12,11 +12,11 @@ export class DataService {
   constructor(private _http: HttpClient) { }
 
   getTimingPlans(): Observable<TimingPlan[]>{
-    console.log(`${API.TIMINGPLAN}/GetTimingPlan`)
-    return this._http.get<TimingPlan[]>(`${API.TIMINGPLAN}/GetTimingPlan`)
+    console.log(`${API.GET_TIMING_PLAN}/GetTimingPlan`)
+    return this._http.get<TimingPlan[]>(`${API.GET_TIMING_PLAN}/GetTimingPlan`)
   }
   getDepartments(): Observable<Department[]>{
-    console.log(`${API.DEPARTMENTS}/GetDepartments`)
+    console.log(`${API.DEPARTMENTS}`)
     return this._http.get<Department[]>(`${API.DEPARTMENTS}/GetDepartments`)
   }
 }

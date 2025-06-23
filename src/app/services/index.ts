@@ -11,8 +11,7 @@ export const API = {
 
     //     LOGIN: `${BASE_URL}/Account/Login`,
   },
-  TIMINGPLAN: `${BASE_URL}/TimingPlans`,
-  DEPARTMENTS: `${BASE_URL}/Departments`,
+  DEPARTMENTS: `${BASE_URL}/Departments/GetDepartments`,
   LOCATIONS: `${BASE_URL}/Locations`,
   NODES: `${BASE_URL}/Nodes`,
   EMPLOYEES: `${BASE_URL}/Employees/all`,
@@ -21,4 +20,5 @@ export const API = {
   GET_TIME_PLANS_NON_ALLOW: `${BASE_URL}/TimingPlans/GetTimePlansNonAllow`,
   GET_ALLOW_TIME_PLAN: `${BASE_URL}/TimingPlans/GetAllowTimePlan`,
   GET_EMPLOYEE_ALLOWS: `${BASE_URL}/EmployeeAllows/GetEmployeeAllows`,
+  ADD_EMPLOYEE_ALLOWS: `${BASE_URL}/EmployeeAllows/AddEmployeeAllow`,
 };
