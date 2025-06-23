@@ -57,27 +57,16 @@
       </div>
       <!-- <div *ngIf="editedUser.timingPlan" class="mb-4">
         <label class="block mb-1 arabic-text"
-          >خطة الدوام: {{ editedUser.timingPlan.DescA }}</label
+          >موعد الدوام: {{ editedUser.timingPlan.DescA }}</label
         >
         <div class="flex gap-2">
-          <div class="flex-1">
-            <label class="block mb-1 arabic-text">من</label>
-            <input
-              type="time"
-              [(ngModel)]="editedUser.timingPlan.FromTime"
-              name="fromTime"
-              class="border rounded px-4 py-2 w-full arabic-text"
-            />
-          </div>
-          <div class="flex-1">
-            <label class="block mb-1 arabic-text">إلى</label>
-            <input
-              type="time"
-              [(ngModel)]="editedUser.timingPlan.ToTime"
-              name="toTime"
-              class="border rounded px-4 py-2 w-full arabic-text"
-            />
-          </div>
+
+        <div *ngIf="editedUser.timingPlan" class="text-right mb-6">
+          <p class="text-xl text-gray-600 arabic-text">
+            من: {{ getTimeAsDate(editedUser.timingPlan.fromTime) | date : "h:mm a" }} - إلى:
+            {{ getTimeAsDate(editedUser.timingPlan.toTime) | date : "h:mm a" }}
+          </p>
+      </div>
         </div>
       </div> -->
       <div class="flex justify-end gap-2">

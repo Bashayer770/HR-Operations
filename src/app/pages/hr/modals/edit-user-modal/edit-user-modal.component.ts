@@ -48,7 +48,7 @@ export class EditUserModalComponent implements OnInit {
     });
   }
 
-  onOverlayClick(event: MouseEvent) {
+  onOverlayClick(event: MouseEvent) {    
     if (event.target === event.currentTarget) {
       this.close.emit();
     }
@@ -57,4 +57,12 @@ export class EditUserModalComponent implements OnInit {
   onSave() {
     this.save.emit(this.editedUser);
   }
+
+  getTimeAsDate(time: string): Date {
+    const today = new Date();
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes, seconds);
+  }
+
+
 }

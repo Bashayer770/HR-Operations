@@ -184,6 +184,21 @@ export class ManageUsersComponent implements OnInit {
     console.log('Saving user:', updatedUser);
     const index = this.users.findIndex((u) => u.id === updatedUser.id);
     if (index !== -1) {
+let a = {
+        Id: updatedUser.id,
+        TimingCode: updatedUser.timingPlan.id
+      }
+      console.log(a)
+
+      this.http.post(API.EDIT_EMPLOYEE,a).subscribe({
+      next: (data) => {
+        console.log(data)
+      },
+      error: (err) => {
+        console.error('Failed to load timing plans', err);
+      },
+    });
+
       this.users[index] = updatedUser;
     }
     this.closeEditModal();
@@ -272,7 +287,12 @@ export class ManageUsersComponent implements OnInit {
   }
 
   generateReport() {
+    console.log("REPORT TEST")
     if (!this.reportStartDate || !this.reportEndDate) return;
+
+
+        console.log(this.reportStartDate)
+        console.log(this.reportEndDate)
 
     const requestBody = {
       fromDate: this.reportStartDate,
