@@ -19,6 +19,9 @@ export class AttendanceDetailsModalComponent implements OnInit {
   transactions: Transaction[] = [];
   loading = false;
   error: string | null = null;
+  filterDate: string = '';
+  filterFrom: string = '';
+  filterTo: string = '';
 
   TransactionTypeLabels: Record<TransactionType, string> = {
     [TransactionType.Late]: 'تأخير',
@@ -38,17 +41,19 @@ export class AttendanceDetailsModalComponent implements OnInit {
 
   fetchTransactions() {
     this.loading = true;
-    this.attendanceService.getTransactionItems(this.user.id, 2025, 6).subscribe({
-      next: (data: Transaction[]) => {
-        this.transactions = data;
-        this.loading = false;
-      },
-      error: (err: any) => {
-        this.error = 'فشل تحميل بيانات الحضور';
-        this.loading = false;
-        console.error(err);
-      },
-    });
+    this.attendanceService
+      .getTransactionItems(this.user.id, 2025, 6)
+      .subscribe({
+        next: (data: Transaction[]) => {
+          this.transactions = data;
+          this.loading = false;
+        },
+        error: (err: any) => {
+          this.error = 'فشل تحميل بيانات الحضور';
+          this.loading = false;
+          console.error(err);
+        },
+      });
   }
 
   onOverlayClick(event: MouseEvent) {
@@ -62,5 +67,22 @@ export class AttendanceDetailsModalComponent implements OnInit {
     const now = new Date();
     now.setHours(hours, minutes, seconds);
     return now;
+  }
+
+  get filteredTransactions() {
+    return this.transactions.filter((row) => {
+      let matches = true;
+      if (this.filterDate) {
+        const rowDate = new Date(row.date).toISOString().slice(0, 10);
+        matches = matches && rowDate === this.filterDate;
+      }
+      if (this.filterFrom) {
+        matches = matches && row.fromTime >= this.filterFrom;
+      }
+      if (this.filterTo) {
+        matches = matches && row.toTime <= this.filterTo;
+      }
+      return matches;
+    });
   }
 }

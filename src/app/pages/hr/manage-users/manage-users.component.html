@@ -2,42 +2,42 @@
   class="flex flex-col items-center justify-start min-h-screen bg-gray-50 pt-10 arabic-text"
 >
   <!-- Main Card -->
-  <div class="w-full max-w-7xl bg-white shadow-lg p-8 rounded-lg">
+  <div class="w-full max-w-7xl bg-white shadow-lg p-12 rounded-lg">
     <!-- Header -->
     <div
-      class="bg-primary text-white text-center py-4 rounded-t-lg -mx-8 -mt-8 mb-8"
+      class="bg-primary text-white text-center py-6 rounded-t-lg -mx-12 -mt-12 mb-10"
     >
       <h2 class="block text-3xl font-sans arabic-text">إدارة المستخدمين</h2>
     </div>
 
     <!-- Controls -->
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex justify-between items-center mb-10">
       <!-- Filter Inputs -->
-      <div class="flex gap-4">
+      <div class="flex gap-6">
         <input
           type="text"
           [(ngModel)]="filters.name"
           placeholder="الاسم"
-          class="w-full px-6 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
+          class="w-full px-8 py-4 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
         />
         <input
           type="text"
           [(ngModel)]="filters.fingerCode"
           placeholder=" كود البصمة"
-          class="w-full px-6 py-3 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
+          class="w-full px-8 py-4 border-b-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 arabic-text"
         />
       </div>
       <!-- Add Button -->
       <button
         (click)="addUser()"
-        class="bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary/80 arabic-text whitespace-nowrap"
+        class="bg-primary text-white py-4 px-8 rounded-lg hover:bg-primary/80 arabic-text whitespace-nowrap"
       >
         إضافة مستخدم
       </button>
     </div>
 
     <!-- Content: Table and Details -->
-    <div class="flex gap-6">
+    <div class="flex gap-10">
       <!-- Table Section -->
       <div class="w-[75%]">
         <div
@@ -52,19 +52,19 @@
           <table class="min-w-full" *ngIf="!loading && !error">
             <thead class="bg-primary text-white">
               <tr>
-                <th class="py-3 px-6 text-right font-semibold arabic-text">
+                <th class="py-4 px-8 text-right font-semibold arabic-text">
                   الاسم
                 </th>
-                <th class="py-3 px-6 text-right font-semibold arabic-text">
+                <th class="py-4 px-8 text-right font-semibold arabic-text">
                   كود البصمة
                 </th>
-                <th class="py-3 px-6 text-right font-semibold arabic-text">
+                <th class="py-4 px-8 text-right font-semibold arabic-text">
                   البريد الإلكتروني
                 </th>
-                <th class="py-3 px-6 text-right font-semibold arabic-text">
+                <th class="py-4 px-8 text-right font-semibold arabic-text">
                   خطة الدوام
                 </th>
-                <th class="py-3 px-6 text-center font-semibold arabic-text">
+                <th class="py-4 px-8 text-center font-semibold arabic-text">
                   الإجراءات
                 </th>
               </tr>
@@ -76,27 +76,19 @@
                 class="hover:bg-gray-50 cursor-pointer"
                 [class.bg-gray-100]="selectedUser?.id === user.id"
               >
-                <td class="py-3 px-6 arabic-text">
+                <td class="py-4 px-8 arabic-text">
                   {{ user.nameE }}
                 </td>
-                <td class="py-3 px-6 arabic-text">
+                <td class="py-4 px-8 arabic-text">
                   {{ user.fingerCode }}
                 </td>
-                <td class="py-3 px-6 arabic-text">
+                <td class="py-4 px-8 arabic-text">
                   {{ user.email }}
                 </td>
-                <td class="py-3 px-6">
-                  <select
-                    [ngModel]="user.timingPlan?.id"
-                    (change)="onTimingPlanChange(user, $event)"
-                    class="w-full bg-transparent border-none rounded-md focus:ring-0 focus:outline-none arabic-text"
-                  >
-                    <option *ngFor="let plan of timingPlans" [value]="plan.id">
-                      {{ plan.DescA }}
-                    </option>
-                  </select>
+                <td class="py-4 px-8 arabic-text">
+                  {{ user.timingPlan.DescA }}
                 </td>
-                <td class="py-3 px-6 flex items-center justify-center gap-2">
+                <td class="py-4 px-8 flex items-center justify-center gap-2">
                   <button
                     (click)="editUser(user); $event.stopPropagation()"
                     class="p-2 rounded-full text-cyan-700 hover:bg-cyan-50 transition-colors"
@@ -144,7 +136,7 @@
       <div class="w-[25%]">
         <div
           *ngIf="selectedUser"
-          class="bg-slate-50 rounded-lg shadow-sm border border-gray-200 p-6 h-full"
+          class="bg-slate-50 rounded-lg shadow-sm border border-gray-200 p-10 h-full flex flex-col gap-3"
         >
           <h3 class="text-xl font-bold mb-4 arabic-text text-primary">
             {{ selectedUser.nameE }}
@@ -195,12 +187,18 @@
           </p>
           <!-- Add more fields as needed -->
 
-          <div class="mt-6">
+          <div class="mt-6 flex flex-col gap-2">
             <button
               (click)="openAttendanceModal(selectedUser)"
               class="w-full bg-slate-200 hover:bg-slate-300 text-slate-800 py-2 px-4 rounded-lg arabic-text"
             >
               عرض سجل الحضور
+            </button>
+            <button
+              (click)="openAllowModal(selectedUser)"
+              class="w-full bg-green-200 hover:bg-green-300 text-green-800 py-2 px-4 rounded-lg arabic-text"
+            >
+              إضافة بدل
             </button>
           </div>
         </div>
@@ -242,3 +240,12 @@
   [user]="userForAttendance!"
   (close)="closeAttendanceModal()"
 ></app-attendance-details-modal>
+
+<!-- Allow Modal -->
+<app-allow-modal
+  *ngIf="showAllowModal"
+  [user]="userForAllow"
+  [allows]="allows"
+  (close)="closeAllowModal()"
+  (save)="onAllowSave($event)"
+></app-allow-modal>

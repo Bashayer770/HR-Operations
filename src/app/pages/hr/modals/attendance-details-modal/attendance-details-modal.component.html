@@ -34,6 +34,34 @@
       </p>
     </div>
 
+    <!-- Filters -->
+    <div class="flex gap-4 mb-4">
+      <div>
+        <label class="block mb-1 arabic-text">تاريخ</label>
+        <input
+          type="date"
+          [(ngModel)]="filterDate"
+          class="border rounded px-3 py-2 arabic-text"
+        />
+      </div>
+      <div>
+        <label class="block mb-1 arabic-text">من</label>
+        <input
+          type="time"
+          [(ngModel)]="filterFrom"
+          class="border rounded px-3 py-2 arabic-text"
+        />
+      </div>
+      <div>
+        <label class="block mb-1 arabic-text">إلى</label>
+        <input
+          type="time"
+          [(ngModel)]="filterTo"
+          class="border rounded px-3 py-2 arabic-text"
+        />
+      </div>
+    </div>
+
     <!-- Attendance Table -->
     <div class="flex-1 overflow-y-auto">
       <div *ngIf="loading" class="text-center p-8 arabic-text">
@@ -58,7 +86,7 @@
         </thead>
         <tbody class="divide-y divide-gray-200">
           <tr
-            *ngFor="let row of transactions; track: $index"
+            *ngFor="let row of filteredTransactions; track: $index"
             class="hover:bg-gray-50"
           >
             <td class="px-6 py-4">

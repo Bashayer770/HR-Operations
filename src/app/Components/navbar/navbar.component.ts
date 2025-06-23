@@ -14,9 +14,12 @@ import { Observable } from 'rxjs';
 export class NavbarComponent {
   isDropdownOpen = false;
   isLoggedIn$: Observable<boolean>;
+  role: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
+    const user = this.authService.getUser();
+    this.role = user?.role || null;
   }
 
   logout() {
