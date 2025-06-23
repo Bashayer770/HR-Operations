@@ -135,7 +135,10 @@
     </ng-container>
 
     <!-- Right side (All users) -->
-    <div class="flex items-end space-x-4" *ngIf="isLoggedIn$ | async">
+    <div
+      class="flex flex-row-reverse items-end space-x-4 space-x-reverse justify-end w-full"
+      *ngIf="isLoggedIn$ | async"
+    >
       <a
         routerLink="/user-info"
         class="hover:text-accent-foreground text-xl rounded-lg px-3 py-1 hover:bg-white arabic-text cursor-pointer"

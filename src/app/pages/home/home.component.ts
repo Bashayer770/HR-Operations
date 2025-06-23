@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
 
   userName: string | null = null;
   empId: string | null = null;
+  fingerCode: string | null = null;
   timingPlan: TimingPlan | null = null;
 
   summary = [
@@ -89,6 +90,7 @@ export class HomeComponent implements OnInit {
       const decodedToken: JwtPayload = jwtDecode(token);
       this.userName = decodedToken.name;
       this.empId = decodedToken.empId;
+      this.fingerCode = decodedToken.fingerCode;
     }
     this.attendanceService
       .getTransactionItems(
@@ -102,7 +104,7 @@ export class HomeComponent implements OnInit {
         this.remainingMinutes = 720 - this.usedMinutes;
       });
 
-      console.log("TEST EMPLOYEE SERVICE WITH ID: " + this.empId)
+    console.log('TEST EMPLOYEE SERVICE WITH ID: ' + this.empId);
     this.employeeService
       .getEmployeeById(Number(this.empId))
       .subscribe((employee: EmployeeData) => {
@@ -119,9 +121,15 @@ export class HomeComponent implements OnInit {
   }
 
   getTimeAsDate(time: string): Date {
-  const today = new Date();
-  const [hours, minutes, seconds] = time.split(':').map(Number);
-  return new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes, seconds);
-}
-
+    const today = new Date();
+    const [hours, minutes, seconds] = time.split(':').map(Number);
+    return new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+      hours,
+      minutes,
+      seconds
+    );
+  }
 }
