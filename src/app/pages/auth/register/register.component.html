@@ -36,7 +36,7 @@
         required
         class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       >
-        <option value="0">اختر الجنس</option>
+        <option value="0" disabled selected hidden style="color: #b0b0b0">اختر الجنس</option>
         <option value="1">ذكر</option>
         <option value="2">أنثى</option>
       </select>
@@ -46,9 +46,7 @@
         required
         class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       >
-        <option value="" disabled selected style="color: #b0b0b0">
-          اختر خطة الدوام
-        </option>
+        <option value="0" disabled selected hidden style="color: #b0b0b0">اختر خطة الدوام</option>
         <option *ngFor="let plan of timingplan" [value]="plan.id">
           {{ plan.descA }} ({{ plan.fromTime }} - {{ plan.toTime }})
         </option>
@@ -59,9 +57,7 @@
         required
         class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       >
-        <option value="" disabled selected style="color: #b0b0b0">
-          اختر القسم
-        </option>
+        <option value="0" disabled selected hidden style="color: #b0b0b0">اختر القسم</option>
         <option *ngFor="let dept of departments" [value]="dept.deptCode">
           {{ dept.descA }}
         </option>
@@ -72,7 +68,7 @@
         required
         class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       >
-        <option value="">اختر الدور الوظيفي</option>
+        <option value="0" disabled selected hidden style="color: #b0b0b0">اختر الدور الوظيفي</option>
         <option value="Admin">مدير</option>
         <option value="Employee">موظف</option>
       </select>

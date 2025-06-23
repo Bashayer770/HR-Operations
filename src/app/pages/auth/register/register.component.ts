@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { DataService } from '../../../services/data.service';
@@ -15,6 +15,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
+
+ @Output() registrationSuccess = new EventEmitter<void>();
 
   loading: boolean = false
   exitAnimation: boolean = false;
@@ -64,12 +66,15 @@ export class RegisterComponent {
       })
       .subscribe({
         next: (res) => {
+          console.log(res)
           console.log('register Payload:', this.registerData);
-          sessionStorage.setItem('token', res.token);
+          // sessionStorage.setItem('token', res.token);
           // this.router.navigate(['/home']);
           this.exitAnimation = true;
+          this.registrationSuccess.emit()
           setTimeout(() => {
-            this.router.navigate(['/home']);
+            this.registrationSuccess.emit()
+            //this.router.navigate(['/home']);
           }, 700);
         },
         error: (err) => {

@@ -244,7 +244,9 @@
   (click)="closeRegisterModal()"
 >
   <div (click)="$event.stopPropagation()">
-    <app-register (closeModal)="closeRegisterModal()"></app-register>
+    <app-register (closeModal)="closeRegisterModal()"
+    (registrationSuccess)="onRegistrationSuccess()"
+    ></app-register>
   </div>
 </div>
 

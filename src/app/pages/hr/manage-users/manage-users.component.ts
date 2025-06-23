@@ -248,6 +248,9 @@ let a = {
     this.showAllowModal = false;
     this.userForAllow = null;
   }
+    onRegistrationSuccess() {
+    this.showRegisterModal = false; // Close the modal
+  }
 
   onAllowSave(selectedAllow: TimingPlan) {
     console.log(
