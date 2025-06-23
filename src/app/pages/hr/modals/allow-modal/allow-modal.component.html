@@ -47,7 +47,9 @@
           class="w-full px-4 h-10 border border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:border-primary hover:bg-slate-50 mb-4 text-right arabic-text"
           required
         >
-          <option [ngValue]="null" disabled selected>اختر نوع التخفيف</option>
+          <option [ngValue]="null" disabled selected style="color: #b0b0b0">
+            اختر نوع التخفيف
+          </option>
           <option *ngFor="let allow of allows" [ngValue]="allow">
             {{ allow.descA }}
           </option>
