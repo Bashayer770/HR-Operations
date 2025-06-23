@@ -38,7 +38,7 @@ export class AttendanceDetailsModalComponent implements OnInit {
 
   fetchTransactions() {
     this.loading = true;
-    this.attendanceService.getAllTransactions(this.user.id).subscribe({
+    this.attendanceService.getTransactionItems(this.user.id, 2025, 6).subscribe({
       next: (data: Transaction[]) => {
         this.transactions = data;
         this.loading = false;

@@ -3,6 +3,7 @@ export interface JwtPayload {
   fingerCode: string;
   name: string; 
   userInfo: string;
+  role: string;
 }
 
 export interface UserInfo{
