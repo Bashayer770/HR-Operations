@@ -1,0 +1,60 @@
+<div
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  (click)="onOverlayClick($event)"
+>
+  <div
+    class="bg-white rounded-lg p-8 min-w-[350px] max-w-[90vw] relative"
+    (click)="$event.stopPropagation()"
+  >
+    <button
+      (click)="close.emit()"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="w-6 h-6"
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L17.94 6M18 18L6.06 6"
+        ></path>
+      </svg>
+    </button>
+    <h2 class="text-xl font-bold mb-4 arabic-text">إضافة بدل للموظف</h2>
+    <form (ngSubmit)="onSave()">
+      <div class="mb-4">
+        <label class="block mb-1 arabic-text">اختر نوع البدل</label>
+        <select
+          [(ngModel)]="selectedAllow"
+          name="allow"
+          class="border rounded px-4 py-2 w-full arabic-text"
+          required
+        >
+          <option *ngFor="let allow of allows" [ngValue]="allow">
+            {{ allow.name || allow.desc || allow.type || allow }}
+          </option>
+        </select>
+      </div>
+      <div class="flex justify-end gap-2">
+        <button
+          type="button"
+          (click)="close.emit()"
+          class="bg-gray-300 px-4 py-2 rounded arabic-text"
+        >
+          إلغاء
+        </button>
+        <button
+          type="submit"
+          class="bg-green-700 text-white px-4 py-2 rounded arabic-text"
+        >
+          حفظ
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

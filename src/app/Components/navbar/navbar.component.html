@@ -77,62 +77,64 @@
   <div
     class="container mx-auto flex justify-between items-center bg-primary rounded-full px-6 h-16"
   >
-    <!-- Left side -->
-    <div
-      class="flex items-center space-x-4 relative"
-      *ngIf="isLoggedIn$ | async"
-    >
-      <div class="group relative flex items-center">
-        <button
-          class="text-lg font-semibold hover:text-accent-foreground hover:bg-white rounded-lg px-3 py-1 arabic-text flex items-center gap-2 focus:outline-none"
-          type="button"
-          tabindex="0"
-        >
-          خدمات شؤون الموظفين
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 transition-transform group-hover:rotate-180"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+    <!-- Left side (Admin only) -->
+    <ng-container *ngIf="isLoggedIn$ | async">
+      <div
+        class="flex items-center space-x-4 relative"
+        *ngIf="role === 'Admin'"
+      >
+        <div class="group relative flex items-center">
+          <button
+            class="text-lg font-semibold hover:text-accent-foreground hover:bg-white rounded-lg px-3 py-1 arabic-text flex items-center gap-2 focus:outline-none"
+            type="button"
+            tabindex="0"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
-        <!-- Dropdown Menu -->
-        <div
-          class="absolute top-full right-0 mt-2 w-64 rounded-md shadow-lg bg-white focus:outline-none z-50 opacity-0 group-hover:opacity-100 transition-opacity"
-        >
-          <div class="py-1">
-            <a
-              routerLink="/location"
-              class="block px-4 py-2 text-lg text-primary hover:bg-primary hover:text-white arabic-text text-right transition-colors"
+            خدمات شؤون الموظفين
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 transition-transform group-hover:rotate-180"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              إدارة المواقع
-            </a>
-            <a
-              routerLink="/node"
-              class="block px-4 py-2 text-lg text-primary hover:bg-primary hover:text-white arabic-text text-right transition-colors"
-            >
-              إدارة الأجهزة
-            </a>
-            <a
-              routerLink="/manage-users"
-              class="block px-4 py-2 text-lg text-primary hover:bg-primary hover:text-white arabic-text text-right transition-colors"
-            >
-              إدارة المستخدمين
-            </a>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute top-full right-0 mt-2 w-64 rounded-md shadow-lg bg-white focus:outline-none z-50 opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+            <div class="py-1">
+              <a
+                routerLink="/location"
+                class="block px-4 py-2 text-lg text-primary hover:bg-primary hover:text-white arabic-text text-right transition-colors"
+              >
+                إدارة المواقع
+              </a>
+              <a
+                routerLink="/node"
+                class="block px-4 py-2 text-lg text-primary hover:bg-primary hover:text-white arabic-text text-right transition-colors"
+              >
+                إدارة الأجهزة
+              </a>
+              <a
+                routerLink="/manage-users"
+                class="block px-4 py-2 text-lg text-primary hover:bg-primary hover:text-white arabic-text text-right transition-colors"
+              >
+                إدارة المستخدمين
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
 
-    <!-- Right side -->
+    <!-- Right side (All users) -->
     <div class="flex items-center space-x-4" *ngIf="isLoggedIn$ | async">
       <a
         routerLink="/user-info"

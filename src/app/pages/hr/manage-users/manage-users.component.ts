@@ -11,6 +11,7 @@ import { EditUserModalComponent } from '../modals/edit-user-modal/edit-user-moda
 import { DeleteUserModalComponent } from '../modals/delete-user-modal/delete-user-modal.component';
 import { AddUserModalComponent } from '../modals/add-user-modal/add-user-modal.component';
 import { AttendanceDetailsModalComponent } from '../modals/attendance-details-modal/attendance-details-modal.component';
+import { AllowModalComponent } from '../modals/allow-modal/allow-modal.component';
 
 @Component({
   selector: 'app-manage-users',
@@ -22,6 +23,7 @@ import { AttendanceDetailsModalComponent } from '../modals/attendance-details-mo
     EditUserModalComponent,
     DeleteUserModalComponent,
     AttendanceDetailsModalComponent,
+    AllowModalComponent,
   ],
   templateUrl: './manage-users.component.html',
 })
@@ -32,6 +34,7 @@ export class ManageUsersComponent implements OnInit {
   userToEdit: EmployeeData | null = null;
   userToDelete: EmployeeData | null = null;
   userForAttendance: EmployeeData | null = null;
+  userForAllow: EmployeeData | null = null;
   loading = false;
   error: string | null = null;
   filters = {
@@ -42,6 +45,8 @@ export class ManageUsersComponent implements OnInit {
   showEditModal = false;
   showDeleteModal = false;
   showAttendanceModal = false;
+  showAllowModal = false;
+  allows: any[] = [];
 
   constructor(
     private http: HttpClient,
@@ -52,6 +57,7 @@ export class ManageUsersComponent implements OnInit {
   ngOnInit() {
     this.fetchUsers();
     this.fetchTimingPlans();
+    this.fetchAllows();
   }
 
   fetchUsers() {
@@ -75,6 +81,17 @@ export class ManageUsersComponent implements OnInit {
       },
       error: (err: any) => {
         console.error('Failed to load timing plans', err);
+      },
+    });
+  }
+
+  fetchAllows() {
+    this.http.get<any[]>(API.GET_EMPLOYEE_ALLOWS).subscribe({
+      next: (data: any[]) => {
+        this.allows = data;
+      },
+      error: (err: any) => {
+        console.error('Failed to load allows', err);
       },
     });
   }
@@ -175,5 +192,25 @@ export class ManageUsersComponent implements OnInit {
   closeAttendanceModal() {
     this.showAttendanceModal = false;
     this.userForAttendance = null;
+  }
+
+  openAllowModal(user: EmployeeData) {
+    this.userForAllow = user;
+    this.showAllowModal = true;
+  }
+
+  closeAllowModal() {
+    this.showAllowModal = false;
+    this.userForAllow = null;
+  }
+
+  onAllowSave(selectedAllow: any) {
+    console.log(
+      'Selected Allow:',
+      selectedAllow,
+      'for user:',
+      this.userForAllow
+    );
+    this.closeAllowModal();
   }
 }
