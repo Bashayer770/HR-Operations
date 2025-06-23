@@ -1,79 +1,86 @@
 <div class="flex justify-center">
   <div class="w-[50%] bg-white shadow-lg p-8 rounded-lg">
-    <h2 class="block text-2xl font-sans text-cyan-700 text-center pb-7 pt-6">
-      User Registration Form
+    <h2
+      class="block text-2xl font-sans text-cyan-700 text-center pb-7 pt-6 arabic-text"
+    >
+      نموذج تسجيل المستخدم
     </h2>
-    <form (ngSubmit)="onRegisterSubmit()" #registerForm="ngForm">
+    <form (ngSubmit)="onRegisterSubmit()" #registerForm="ngForm" dir="rtl">
       <input
         type="email"
         [(ngModel)]="registerData.Email"
         name="Email"
         required
-        placeholder="Email"
-        class="w-full pl-4 pr-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4"
+        placeholder="البريد الإلكتروني"
+        class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       />
       <input
         type="text"
         [(ngModel)]="registerData.FirstName"
         name="FirstName"
         required
-        placeholder="First Name"
-        class="w-full pl-4 pr-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4"
+        placeholder="الاسم الأول"
+        class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       />
       <input
         type="text"
         [(ngModel)]="registerData.LastName"
         name="LastName"
         required
-        placeholder="Last Name"
-        class="w-full pl-4 pr-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4"
+        placeholder="اسم العائلة"
+        class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       />
       <select
         [(ngModel)]="registerData.Gender"
         name="Gender"
         required
-        class="w-full pl-4 pr-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4"
+        class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       >
-        <option value="0">Select Gender</option>
-        <option value="1">Male</option>
-        <option value="2">Female</option>
+        <option value="0">اختر الجنس</option>
+        <option value="1">ذكر</option>
+        <option value="2">أنثى</option>
       </select>
       <select
         [(ngModel)]="registerData.TimingCode"
         name="TimingCode"
         required
-        class="w-full pl-4 pr-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4"
+        class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       >
         <option *ngFor="let plan of timingplan" [value]="plan.id">
-          {{ plan.descE }} ({{ plan.fromTime }} - {{ plan.toTime }})
+          {{ plan.descA }} ({{ plan.fromTime }} - {{ plan.toTime }})
         </option>
       </select>
       <select
         [(ngModel)]="registerData.DeptCode"
         name="DeptCode"
         required
-        class="w-full pl-4 pr-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4"
+        class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
       >
         <option *ngFor="let dept of departments" [value]="dept.deptCode">
-          {{ dept.descE }}
+          {{ dept.descA }}
         </option>
       </select>
-      <input
-        type="text"
+      <select
         [(ngModel)]="registerData.Role"
         name="Role"
         required
-        placeholder="Role"
-        class="w-full pl-4 pr-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4"
-      />
+        class="w-full px-4 h-10 border-b-2 border-gray-300 text-gray-700 rounded-lg shadow-sm focus:outline-none focus:bg-white hover:bg-slate-100 mb-4 text-right arabic-text"
+      >
+        <option value="">اختر الدور الوظيفي</option>
+        <option value="Admin">مدير</option>
+        <option value="Employee">موظف</option>
+      </select>
       <button
         type="submit"
         [disabled]="loading"
-        class="w-full bg-cyan-800 text-white py-2 rounded-lg hover:bg-cyan-900"
+        class="w-full bg-cyan-800 text-white py-2 rounded-lg hover:bg-cyan-900 arabic-text"
       >
-        {{ loading ? "Registering..." : "Submit" }}
+        {{ loading ? "جاري التسجيل..." : "تسجيل" }}
       </button>
-      <div *ngIf="errorMessage" class="text-red-500 text-center mt-4">
+      <div
+        *ngIf="errorMessage"
+        class="text-red-500 text-center mt-4 arabic-text"
+      >
         {{ errorMessage }}
       </div>
     </form>

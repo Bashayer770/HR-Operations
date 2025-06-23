@@ -17,6 +17,9 @@ export class AllowModalComponent {
   @Output() save = new EventEmitter<any>();
 
   selectedAllow: any = null;
+  fromDate: string = '';
+  toDate: string = '';
+  loading: boolean = false;
 
   onOverlayClick(event: MouseEvent) {
     if (event.target === event.currentTarget) {
@@ -25,6 +28,15 @@ export class AllowModalComponent {
   }
 
   onSave() {
-    this.save.emit(this.selectedAllow);
+    if (!this.selectedAllow || !this.fromDate || !this.toDate) {
+      return;
+    }
+
+    this.loading = true;
+    this.save.emit({
+      allow: this.selectedAllow,
+      fromDate: this.fromDate,
+      toDate: this.toDate,
+    });
   }
 }
