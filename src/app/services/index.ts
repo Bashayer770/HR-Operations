@@ -21,7 +21,8 @@ export const API = {
   GET_ALLOW_TIME_PLAN: `${BASE_URL}/TimingPlans/GetAllowTimePlan`,
   GET_EMPLOYEE_ALLOWS: `${BASE_URL}/EmployeeAllows/GetEmployeeAllows`,
   ADD_EMPLOYEE_ALLOWS: `${BASE_URL}/EmployeeAllows/AddEmployeeAllow`,
+  EDIT_EMPLOYEE: `${BASE_URL}/Employees/UpdateEmployee`,
   REPORTS: {
-    ATTENDANCE: `${BASE_URL}/Reports/Attendance`,
+    ATTENDANCE: `${BASE_URL}/Reports/GetAttendanceReport`,
   },
 };

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { API } from '../../services/index';
 import { JwtPayload, UserInfo } from '../../models/JwtPayload';
 import { jwtDecode } from 'jwt-decode';
+import { EmployeeData } from '../../models/Employee';
 
 @Component({
   selector: 'app-user-info',
@@ -14,21 +15,36 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class UserInfoComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
-  userProfile: UserInfo|null = null;
+  userProfile: EmployeeData|null = null;
   loading = false;
   error: string | null = null;
 
   constructor(private http: HttpClient) {
 
   const token = sessionStorage.getItem('token') ?? '';
-  const decodedToken: JwtPayload = jwtDecode(token);
-  this.userProfile = JSON.parse(decodedToken.userInfo)
-  this.loading = false;
+    const decodedToken: JwtPayload = jwtDecode(token);
+
+    this.loading = true;
+    this.http.get<EmployeeData>(`${API.EMPLOYEES}/${decodedToken.empId}`).subscribe({
+      next: (data: EmployeeData) => {
+        console.log(data);
+        this.userProfile = data;
+        this.loading = false;
+      },
+      error: (err: any) => {
+        this.error = err.error || 'فشل تحميل المستخدمين';
+        this.loading = false;
+      },
+    });
+  
   this.error = null;
   }
 
   ngOnInit() {
     this.fetchUserProfile();
+  }
+
+  fetchUsers() {  
   }
 
   fetchUserProfile() {

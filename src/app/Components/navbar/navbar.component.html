@@ -135,21 +135,23 @@
     </ng-container>
 
     <!-- Right side (All users) -->
+
     <div
       class="flex flex-row-reverse items-end space-x-4 space-x-reverse justify-end w-full"
       *ngIf="isLoggedIn$ | async"
     >
-      <a
-        routerLink="/user-info"
-        class="hover:text-accent-foreground text-xl rounded-lg px-3 py-1 hover:bg-white arabic-text cursor-pointer"
-      >
-        بيانات الموظف
-      </a>
+
       <a
         routerLink="/home"
         class="hover:text-accent-foreground text-xl rounded-lg px-3 py-1 hover:bg-white arabic-text cursor-pointer"
       >
         شاشه الرئيسه
+      </a>
+         <a
+        routerLink="/user-info"
+        class="hover:text-accent-foreground text-xl rounded-lg px-3 py-1 hover:bg-white arabic-text cursor-pointer"
+      >
+        بيانات الموظف
       </a>
       <button
         (click)="logout()"

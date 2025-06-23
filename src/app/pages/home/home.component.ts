@@ -88,7 +88,8 @@ export class HomeComponent implements OnInit {
     const token = sessionStorage.getItem('token') ?? '';
     if (token) {
       const decodedToken: JwtPayload = jwtDecode(token);
-      this.userName = decodedToken.name;
+      let userProfile = JSON.parse(decodedToken.userInfo)
+      this.userName = `${userProfile.firstName} ${userProfile.lastName}`;
       this.empId = decodedToken.empId;
       this.fingerCode = decodedToken.fingerCode;
     }
@@ -123,6 +124,7 @@ export class HomeComponent implements OnInit {
   getTimeAsDate(time: string): Date {
     const today = new Date();
     const [hours, minutes, seconds] = time.split(':').map(Number);
+
     return new Date(
       today.getFullYear(),
       today.getMonth(),
@@ -132,4 +134,5 @@ export class HomeComponent implements OnInit {
       seconds
     );
   }
+
 }
