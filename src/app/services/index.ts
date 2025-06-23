@@ -18,5 +18,7 @@ export const API = {
   EMPLOYEES: `${BASE_URL}/Employees/all`,
   CHAT: `${CHAT_URL}/Chat`,
   GET_TIMING_PLAN: `${BASE_URL}/TimingPlans/GetTimingPlan`,
+  GET_TIME_PLANS_NON_ALLOW: `${BASE_URL}/TimingPlans/GetTimePlansNonAllow`,
+  GET_ALLOW_TIME_PLAN: `${BASE_URL}/TimingPlans/GetAllowTimePlan`,
   GET_EMPLOYEE_ALLOWS: `${BASE_URL}/EmployeeAllows/GetEmployeeAllows`,
 };

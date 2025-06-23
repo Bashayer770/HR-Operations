@@ -30,7 +30,13 @@ export class HomeComponent implements OnInit {
       console.log(token);
       return jwtDecode<JwtPayload>(token);
     }
-    let jwt: JwtPayload = { empId: '', fingerCode: '', name: '', role:'', userInfo: '' };
+    let jwt: JwtPayload = {
+      empId: '',
+      fingerCode: '',
+      name: '',
+      role: '',
+      userInfo: '',
+    };
     return jwt;
   };
 
@@ -41,6 +47,7 @@ export class HomeComponent implements OnInit {
   ];
 
   userName: string | null = null;
+  empId: string | null = null;
   timingPlan: TimingPlan | null = null;
 
   summary = [
@@ -77,10 +84,14 @@ export class HomeComponent implements OnInit {
   };
   ngOnInit(): void {
     const token = sessionStorage.getItem('token') ?? '';
-    const decodedToken: JwtPayload = jwtDecode(token);
+    if (token) {
+      const decodedToken: JwtPayload = jwtDecode(token);
+      this.userName = decodedToken.name;
+      this.empId = decodedToken.empId;
+    }
     this.attendanceService
       .getTransactionItems(
-        Number(decodedToken.empId),
+        Number(this.empId),
         new Date().getFullYear(),
         new Date().getMonth() + 1
       )
@@ -91,9 +102,8 @@ export class HomeComponent implements OnInit {
       });
 
     this.employeeService
-      .getEmployeeById(Number(decodedToken.empId))
+      .getEmployeeById(Number(this.empId))
       .subscribe((employee: EmployeeData) => {
-        this.userName = employee.nameA;
         this.timingPlan = employee.timingPlan;
       });
   }

@@ -19,9 +19,7 @@ export class AttendanceDetailsModalComponent implements OnInit {
   transactions: Transaction[] = [];
   loading = false;
   error: string | null = null;
-  filterDate: string = '';
-  filterFrom: string = '';
-  filterTo: string = '';
+  filterMonth: string = '';
 
   TransactionTypeLabels: Record<TransactionType, string> = {
     [TransactionType.Late]: 'تأخير',
@@ -71,18 +69,10 @@ export class AttendanceDetailsModalComponent implements OnInit {
 
   get filteredTransactions() {
     return this.transactions.filter((row) => {
-      let matches = true;
-      if (this.filterDate) {
-        const rowDate = new Date(row.date).toISOString().slice(0, 10);
-        matches = matches && rowDate === this.filterDate;
-      }
-      if (this.filterFrom) {
-        matches = matches && row.fromTime >= this.filterFrom;
-      }
-      if (this.filterTo) {
-        matches = matches && row.toTime <= this.filterTo;
-      }
-      return matches;
+      if (!this.filterMonth) return true;
+      // row.date is a Date or string; convert to YYYY-MM
+      const rowMonth = new Date(row.date).toISOString().slice(0, 7);
+      return rowMonth === this.filterMonth;
     });
   }
 }
